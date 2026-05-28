@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Production Triage Automation</title><style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0f0f17;color:white}body{position:relative}.deck{width:100%;height:100%;position:relative;overflow:hidden}.slide{position:absolute;inset:0;padding:54px 72px 70px;background:#14112b;opacity:0;transform:translateX(70px);transition:opacity .42s ease,transform .42s ease;pointer-events:none;overflow-y:auto}.slide.active{opacity:1;transform:translateX(0);pointer-events:auto}.slide::before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 82% 28%,rgba(255,33,86,.20),transparent 24%),radial-gradient(circle at 16% 10%,rgba(255,255,255,.06),transparent 22%);pointer-events:none}.slide::after{content:"";position:absolute;right:7%;top:18%;width:210px;height:70px;background:#c1063b;border-radius:999px;transform:rotate(-45deg);box-shadow:160px 220px 0 -15px #c1063b,55px 420px 0 -5px #c1063b;opacity:.92;pointer-events:none}.slide>*{position:relative;z-index:1}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.logo{font-size:28px;font-weight:800;letter-spacing:-1px}.logo span{color:#ff2156}.idx{color:#8f8faa;font-size:13px;letter-spacing:2px}.eyebrow{color:#ff2156;letter-spacing:4px;font-weight:800;font-size:15px;text-transform:uppercase;margin-bottom:18px}h1{font-size:58px;line-height:1.06;margin:0 0 20px;letter-spacing:-2.2px;max-width:1150px}h1 span,.red{color:#ff2156}.subtitle{font-size:24px;line-height:1.45;color:#d6d6e3;max-width:1050px;margin-bottom:34px}.cover h1{font-size:76px}.chapter{display:flex;flex-direction:column;justify-content:center}.chapter h1{font-size:82px;max-width:1200px}.chapter .subtitle{font-size:30px;max-width:950px}.split h1 span{display:block}.tag{display:inline-flex;align-items:center;gap:12px;padding:12px 18px;border:1px solid rgba(255,255,255,.18);border-radius:999px;color:#d6d6e3;font-size:15px}.tag span{width:10px;height:10px;border-radius:50%;background:#ff2156;display:inline-block}.hero-metrics{margin-top:52px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:950px}.hero-metrics div,.card,.step,.arch-card,.arch-lanes div,.arch-output,.node,.agent-grid div,.feature,.compare>div,.bad,.good,.before-after>div{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:24px;backdrop-filter:blur(10px)}.hero-metrics div{padding:22px}.hero-metrics b{display:block;font-size:20px;margin-bottom:8px}.hero-metrics small,.card p,.step p,.arch-card p,.hero-metrics small{color:#b9b9ca;line-height:1.55}.agenda{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:1120px}.agenda div{display:grid;grid-template-columns:64px 1fr;gap:8px 18px;padding:24px;border-radius:22px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}.agenda span{grid-row:1/3;color:#ff2156;font-weight:800;font-size:34px}.agenda b{font-size:24px}.agenda small{font-size:16px;color:#aaaabc}.process{display:grid;gap:22px;margin-top:36px}.process.four{grid-template-columns:repeat(4,1fr)}.step{min-height:360px;padding:26px;position:relative;overflow:hidden}.step em{font-style:normal;display:inline-grid;place-items:center;width:54px;height:54px;border-radius:50%;border:2px solid #ff2156;color:#ff2156;font-size:28px;font-weight:800;margin-bottom:18px}.step h3{font-size:26px;line-height:1.2;margin:0 0 16px}.fileicon,.mini-ticket,.extract-icon{position:absolute;bottom:28px;right:24px;color:#ff2156;border:1px solid rgba(255,33,86,.4);border-radius:16px;padding:18px 20px;font-weight:800;background:rgba(255,33,86,.08)}.mini-ticket{font-size:22px}.mini-ticket span{display:block;color:#c8c8d5;font-size:14px;margin-top:6px}.extract-icon{font-size:28px}.source-list{position:absolute;bottom:24px;left:24px;right:24px;display:grid;gap:10px}.source-list b{border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;color:#e9e9f3}.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:30px}.card{padding:28px;min-height:230px}.card small{display:block;color:#8f8faa;letter-spacing:3px;font-weight:800;margin-bottom:12px}.card h3{font-size:29px;margin:0 0 18px}.chips{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.chips span{border:1px solid rgba(255,33,86,.5);color:#f0f0f8;border-radius:999px;padding:8px 14px;background:rgba(255,33,86,.07);font-weight:700}.chips.large span{font-size:22px}.punch{font-size:38px;font-weight:800;margin-top:34px}.punch span{color:#ff2156}.punch.small{font-size:32px}.hub-wrap{height:470px;position:relative;margin-top:20px}.hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:210px;height:210px;border-radius:50%;display:grid;place-items:center;text-align:center;background:#ff2156;font-size:28px;font-weight:800;box-shadow:0 0 0 22px rgba(255,33,86,.09)}.orbit{position:absolute;padding:16px 22px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);font-weight:700}.o1{left:13%;top:12%}.o2{right:16%;top:14%}.o3{left:5%;bottom:22%}.o4{right:9%;bottom:25%}.o5{left:42%;top:4%}.o6{left:42%;bottom:8%}.quote{font-size:34px;font-weight:700;line-height:1.25;max-width:1000px}.architecture{margin-top:24px}.arch-row{display:flex;align-items:stretch;gap:18px}.arch-card{flex:1;padding:22px}.arch-card small{color:#8f8faa;font-weight:800;letter-spacing:2px}.arch-card h3{font-size:22px;line-height:1.25}.arch-card.accent{border-color:rgba(255,33,86,.45);box-shadow:inset 0 0 0 1px rgba(255,33,86,.18)}.arch-arrow{display:grid;place-items:center;color:#ff2156;font-size:32px;font-weight:800}.arch-lanes{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:22px}.arch-lanes div{padding:22px;min-height:150px}.arch-lanes b{display:block;font-size:20px;margin-bottom:14px}.arch-lanes span{color:#bcbccd;line-height:1.6}.arch-output{margin-top:22px;padding:24px;display:flex;gap:24px;align-items:center}.arch-output b{font-size:26px;color:#ff2156}.arch-output span{font-size:22px}.pipeline{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:34px 0}.pipeline.compact .node{font-size:16px}.node{padding:17px 22px;font-weight:800}.node.hot{background:rgba(255,33,86,.16);border-color:rgba(255,33,86,.45)}.arrow{font-size:30px;color:#ff2156;font-weight:900}.evidence-table-wrap{margin-top:26px;border-radius:22px;border:1px solid rgba(255,255,255,.10);overflow:hidden;background:rgba(255,255,255,.035)}.evidence-table{width:100%;border-collapse:collapse;font-size:15px}.evidence-table th{background:rgba(255,33,86,.18);color:#fff;text-align:left;padding:14px 18px;letter-spacing:1px}.evidence-table td{padding:14px 18px;border-top:1px solid rgba(255,255,255,.08);color:#c8c8d5;vertical-align:top}.evidence-table td:first-child{font-weight:800;color:#fff}.agent-main{margin:20px auto 26px;width:420px;text-align:center;padding:24px;border-radius:999px;background:#ff2156;font-size:28px;font-weight:800}.agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1000px;margin:0 auto}.agent-grid div{text-align:center;padding:22px;font-weight:700}.split-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:36px}.feature h3{font-size:28px;margin:0 0 14px}.feature h3 span{color:#ff2156}.feature{padding:28px}.dashboard-mock{max-width:980px;height:430px;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.10);padding:24px}.dash-head{display:flex;justify-content:space-between;color:#dcdce6;margin-bottom:22px}.dash-head span{color:#ff2156}.dash-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:150px 180px;gap:16px}.dash-grid div{border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}.dash-grid div:first-child{grid-row:span 2}.output-list{margin-top:24px;display:flex;gap:14px}.output-list span{padding:12px 16px;border-radius:999px;background:rgba(255,33,86,.12);border:1px solid rgba(255,33,86,.35);font-weight:800}.loop{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:50px}.loop div{padding:22px 24px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-weight:800}.loop span{color:#ff2156;font-size:28px}.two-col,.before-after,.compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}.bad,.good,.before-after>div,.compare>div{padding:30px}.bad{border-color:rgba(255,255,255,.15)}.good{border-color:rgba(255,33,86,.45)}pre{white-space:pre-wrap;font-family:"SFMono-Regular",Consolas,monospace;color:#e8e8f0;font-size:20px;line-height:1.55}.code-chip{display:inline-block;margin-top:24px;padding:16px 20px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-family:monospace;font-size:22px;color:#ff8aa5}.compare h3{font-size:30px}.compare.vertical{grid-template-columns:1fr}.timeline{display:flex;gap:0;margin-top:32px}.timeline span{flex:1;padding:18px 12px;border-top:4px solid #ff2156;background:rgba(255,255,255,.04);font-weight:700;color:#ddd}.nav{position:fixed;inset:0;pointer-events:none;z-index:10}.nav button{position:absolute;top:50%;transform:translateY(-50%);width:72px;height:72px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:white;font-size:38px;cursor:pointer;pointer-events:auto;backdrop-filter:blur(8px);transition:.25s}.nav button:hover{background:#ff2156}.prev{left:22px}.next{right:22px}
+/* Feedback loop visual slide */
+.feedback-loop-v2 h1{max-width:1500px;font-size:56px;margin-bottom:34px}
+.feedback-loop-v2 .flow-wrap{position:relative;margin-top:16px;padding-bottom:86px}
+.feedback-loop-v2 .flow-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:36px;align-items:stretch}
+.feedback-loop-v2 .flow-card{min-height:280px;padding:24px 20px;border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.070),rgba(255,255,255,.032));border:1px solid rgba(255,255,255,.16);box-shadow:0 18px 50px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:space-between;overflow:hidden}
+.feedback-loop-v2 .flow-card:nth-child(2){border-color:rgba(147,83,255,.72)}
+.feedback-loop-v2 .flow-card:nth-child(3){border-color:rgba(255,33,86,.70)}
+.feedback-loop-v2 .flow-card:nth-child(4){border-color:rgba(64,158,255,.72)}
+.feedback-loop-v2 .flow-card:nth-child(5){border-color:rgba(33,210,145,.72)}
+.feedback-loop-v2 .flow-title{font-size:24px;font-weight:900;line-height:1.15;letter-spacing:-.6px;min-height:55px;display:flex;align-items:center;justify-content:center}
+.feedback-loop-v2 .flow-title .green{color:#25d692}.feedback-loop-v2 .flow-desc{font-size:16px;line-height:1.42;color:#d5d5e2;max-width:230px}.feedback-loop-v2 .icon{width:116px;height:116px;margin:8px 0 4px;filter:drop-shadow(0 16px 26px rgba(0,0,0,.30))}.feedback-loop-v2 .chip-ai{font-size:38px;font-weight:900;fill:white}.feedback-loop-v2 .card-arrow{position:absolute;top:151px;color:#ff2156;font-size:48px;font-weight:900;line-height:1;text-shadow:0 0 18px rgba(255,33,86,.45)}
+.feedback-loop-v2 .a1{left:17.9%}.feedback-loop-v2 .a2{left:37.0%}.feedback-loop-v2 .a3{left:56.1%}.feedback-loop-v2 .a4{left:75.2%}
+.feedback-loop-v2 .retry-line{position:absolute;left:23.4%;right:9.7%;bottom:24px;height:72px;border-bottom:3px dashed #ff2156;border-left:3px dashed #ff2156;border-right:3px dashed #ff2156;border-radius:0 0 18px 18px;opacity:.95}
+.feedback-loop-v2 .retry-line::before{content:'↑';position:absolute;left:-15px;top:-29px;color:#ff2156;font-size:38px;font-weight:900}.feedback-loop-v2 .retry-label{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);background:linear-gradient(180deg,#ff2156,#b80f3b);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:13px 26px;font-size:18px;font-weight:900;box-shadow:0 12px 34px rgba(255,33,86,.22);white-space:nowrap}
+.feedback-loop-v2 .goal-box{margin:6px auto 0;max-width:1100px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);border-radius:22px;padding:22px 34px;display:flex;gap:24px;align-items:center;box-shadow:0 20px 55px rgba(0,0,0,.25)}.feedback-loop-v2 .goal-icon{font-size:48px}.feedback-loop-v2 .goal-text{font-size:30px;line-height:1.3;font-weight:900;letter-spacing:-.7px}.feedback-loop-v2 .goal-text span{color:#ff2156}
+@media (max-height:850px){.feedback-loop-v2 h1{font-size:46px;margin-bottom:20px}.feedback-loop-v2 .flow-card{min-height:238px;padding:18px 16px}.feedback-loop-v2 .icon{width:88px;height:88px}.feedback-loop-v2 .flow-title{font-size:20px;min-height:46px}.feedback-loop-v2 .flow-desc{font-size:14px}.feedback-loop-v2 .card-arrow{top:128px}.feedback-loop-v2 .goal-box{padding:16px 24px}.feedback-loop-v2 .goal-text{font-size:24px}}
+
+.footer{position:absolute;bottom:26px;left:72px;color:#80809a;font-size:12px;letter-spacing:1px}.progress{position:fixed;left:0;bottom:0;height:4px;background:#ff2156;z-index:20;transition:width .3s ease}.slide.active .step,.slide.active .card,.slide.active .node,.slide.active .arch-card,.slide.active .arch-lanes div,.slide.active .agent-grid div{animation:rise .55s both}.slide.active .step:nth-child(2),.slide.active .card:nth-child(2),.slide.active .node:nth-child(3){animation-delay:.08s}.slide.active .step:nth-child(3),.slide.active .card:nth-child(3),.slide.active .node:nth-child(5){animation-delay:.16s}.slide.active .step:nth-child(4),.slide.active .card:nth-child(4),.slide.active .node:nth-child(7){animation-delay:.24s}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}@media(max-width:1100px){h1{font-size:42px}.cover h1,.chapter h1{font-size:56px}.cards-3,.process.four,.arch-lanes,.split-grid,.agenda{grid-template-columns:1fr}.arch-row{flex-direction:column}.arch-arrow{transform:rotate(90deg)}.slide{padding:44px 44px 70px}.nav button{width:58px;height:58px}.subtitle{font-size:20px}}
+
+
+/* --- Max review fixes v3 --- */
+.slide{padding-left:60px;padding-right:60px}.slide h1{font-size:52px}.slide .subtitle{font-size:22px;max-width:1180px}.bundle-fixed::after,.knowledge-table-slide::after,.runtime-flow-slide::after,.report-embed-slide::after,.noise-pipeline-slide::after,.whitelist-oldstyle-slide::after,.semantic-tag-slide::after,.upgrade-flow-slide::after{opacity:.30}
+.bundle-flow-v2{display:grid;grid-template-columns:1fr 34px 1fr 34px 1fr 34px 1fr;gap:14px;align-items:stretch;margin-top:28px}.bundle-card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.10);border-radius:24px;padding:22px 22px 20px;min-height:345px;position:relative;overflow:hidden}.bundle-card .num{width:54px;height:54px;border-radius:50%;border:3px solid #ff2156;color:#ff2156;display:grid;place-items:center;font-size:26px;font-weight:900;margin-bottom:26px}.bundle-card h3{font-size:28px;line-height:1.15;margin:0 0 18px}.bundle-card p{font-size:17px;line-height:1.45;color:#c8c8d5;margin:0;max-width:280px}.flow-arrow{align-self:center;text-align:center;color:#ff2156;font-size:32px;font-weight:900}.icon-pill,.ticket-mini,.extract-mini{position:absolute;right:22px;bottom:22px;border:1px solid rgba(255,33,86,.45);background:rgba(255,33,86,.09);border-radius:16px;color:#ff2156;font-weight:900;padding:14px 18px}.ticket-mini{font-size:22px}.ticket-mini span{display:block;color:#c8c8d5;font-size:13px;margin-top:4px}.extract-mini{font-size:24px}.bundle-card.sources .source-pills{display:grid;grid-template-columns:1fr;gap:8px;margin-top:18px}.bundle-card.sources .source-pills span{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.035);border-radius:12px;padding:8px 12px;font-weight:800;color:#f4f4fb;font-size:16px}.bundle-card.sources p{margin-bottom:6px}
+.knowledge-layout{display:grid;grid-template-columns:360px 1fr;gap:34px;align-items:center;margin-top:22px}.knowledge-visual{height:380px;border-radius:28px;border:1px solid rgba(255,255,255,.09);background:radial-gradient(circle at 50% 45%,rgba(255,33,86,.25),transparent 35%),rgba(255,255,255,.035);position:relative;overflow:hidden}.engineer-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:170px;height:170px;border-radius:50%;display:grid;place-items:center;text-align:center;background:#ff2156;font-size:24px;font-weight:900;box-shadow:0 0 0 18px rgba(255,33,86,.10)}.signal-dot{position:absolute;width:64px;height:64px;border-radius:20px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);font-weight:900}.d-a{left:36px;top:44px}.d-b{right:42px;top:62px}.d-c{left:48px;bottom:60px}.d-d{right:50px;bottom:48px}.connection-line{position:absolute;height:2px;background:linear-gradient(90deg,transparent,#ff2156,transparent);opacity:.7}.l1{left:76px;right:76px;top:102px;transform:rotate(18deg)}.l2{left:76px;right:76px;bottom:104px;transform:rotate(-20deg)}.l3{left:80px;right:80px;top:190px}.knowledge-table-wrap{border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035)}.tx-table{width:100%;border-collapse:collapse;font-size:17px}.tx-table th{background:rgba(255,33,86,.18);text-align:left;padding:16px 18px;color:#fff;letter-spacing:1px}.tx-table td{padding:16px 18px;border-top:1px solid rgba(255,255,255,.09);color:#d7d7e5}.tx-table td:first-child{font-weight:900;color:#ff4b75}.tx-table tr:nth-child(even){background:rgba(255,255,255,.025)}
+.runtime-flow{display:grid;grid-template-columns:1fr 42px 1fr 42px 1fr 42px 1fr;gap:10px;align-items:center;margin-top:34px}.runtime-node{min-height:260px;border-radius:26px;padding:26px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.10);position:relative;overflow:hidden}.runtime-node small{display:block;color:#8f8faa;font-weight:900;letter-spacing:3px;margin-bottom:18px}.runtime-node b{display:block;font-size:28px;line-height:1.15;margin-bottom:18px}.runtime-node span{color:#c9c9d6;line-height:1.55;font-size:17px}.runtime-node em{font-style:normal;color:#ff2156;font-weight:900}.runtime-node::after{content:"";position:absolute;right:-35px;bottom:-35px;width:120px;height:120px;border-radius:50%;background:rgba(255,33,86,.10)}.runtime-arrow{font-size:34px;color:#ff2156;text-align:center;font-weight:900}.runtime-mounts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}.runtime-mounts div{padding:16px 18px;border-radius:16px;background:rgba(255,33,86,.08);border:1px solid rgba(255,33,86,.30)}.runtime-mounts b{display:block;color:#ff3c69;font-family:monospace;font-size:16px;margin-bottom:6px}.runtime-mounts span{color:#ddd}
+.report-embed-slide h1{margin-bottom:12px}.report-browser{height:520px;border-radius:22px;border:1px solid rgba(255,255,255,.12);background:#0f0f17;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.35)}.browser-bar{height:44px;background:#1f1b3a;border-bottom:1px solid rgba(255,255,255,.12);display:flex;align-items:center;gap:16px;padding:0 16px}.browser-bar b{font-size:15px;color:#eee}.browser-bar button{margin-left:auto;width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:#ff6386;font-size:20px;line-height:20px}.traffic{display:flex;gap:8px}.traffic span{width:12px;height:12px;border-radius:50%;background:#ff2156}.traffic span:nth-child(2){background:#e06c30}.traffic span:nth-child(3){background:#1dbf68}.report-browser iframe{width:100%;height:476px;border:0;background:#0f0f17}.report-embed-slide .output-list{margin-top:16px}.report-embed-slide .punch.small{font-size:26px;margin-top:18px}
+.noise-grid{display:grid;grid-template-columns:1fr 470px;gap:32px;margin-top:32px;align-items:center}.big-line{font-size:34px;line-height:1.28;color:#e8e8f0;margin:0 0 24px;max-width:850px}.big-line b{color:#ff2156}.pillbar-red{display:flex;gap:12px;flex-wrap:wrap}.pillbar-red span{border:1px solid rgba(255,33,86,.45);background:rgba(255,33,86,.09);border-radius:999px;padding:12px 16px;font-weight:900}.noise-pipeline{border-radius:28px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);padding:22px;display:grid;gap:10px}.noise-pipeline div{padding:16px 18px;border-radius:16px;background:rgba(255,255,255,.06);font-size:22px;font-weight:900;text-align:center}.noise-pipeline .hot{background:rgba(255,33,86,.16);border:1px solid rgba(255,33,86,.4);color:#fff}.noise-pipeline span{text-align:center;color:#ff2156;font-size:28px;font-weight:900;line-height:1}.whitelist-panels{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;margin-top:28px}.terminal-card,.applied-card{border-radius:28px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);padding:34px;min-height:360px}.terminal-card{background:#080b13;border-color:rgba(255,33,86,.22)}.terminal-card pre{color:#c6f8ff;font-size:24px;line-height:1.6}.applied-card h3{font-size:34px;margin:0 0 22px}.applied-card ul{margin:0;padding:0;list-style:none}.applied-card li{font-size:27px;margin:18px 0;color:#e8e8f0}.applied-card li::before{content:"◆";color:#ff2156;margin-right:18px}.whitelist-oldstyle-slide .punch.small{font-size:30px;margin-top:28px}
+.before-after.semantic pre{font-size:19px;color:#c6f8ff}.before-after.semantic mark{background:rgba(255,33,86,.25);border:1px solid rgba(255,33,86,.75);border-radius:7px;padding:2px 7px;color:#fff}.warn{color:#ffd166;font-weight:900}.semantic-tags span{border-width:2px}.semantic-tags .slow{background:rgba(29,191,104,.14);border-color:rgba(29,191,104,.55);color:#bfffd8}.semantic-tags .damn{background:rgba(224,108,48,.14);border-color:rgba(224,108,48,.60);color:#ffd0b8}.semantic-tags .critical{background:rgba(255,33,86,.18);border-color:rgba(255,33,86,.7);color:#ffb5c5}
+.upgrade-flow{display:grid;grid-template-columns:1fr 70px 1fr;gap:20px;align-items:stretch;margin-top:26px}.upgrade-card{border-radius:28px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);padding:28px}.upgrade-card small{display:block;color:#8f8faa;letter-spacing:3px;font-weight:900;margin-bottom:12px}.upgrade-card h3{font-size:28px;margin:0 0 16px}.upgrade-card pre{font-size:20px;color:#c6f8ff;background:#080b13;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px;margin:0 0 16px}.upgrade-card p{font-size:19px;color:#c8c8d5;line-height:1.45}.upgrade-card.after{border-color:rgba(255,33,86,.45);box-shadow:inset 0 0 0 1px rgba(255,33,86,.18)}.big-flow-arrow{display:grid;place-items:center;font-size:54px;color:#ff2156;font-weight:900}.upgrade-flow-slide .punch.small{font-size:30px;margin-top:22px}
+@media (max-width:1300px){.bundle-flow-v2{grid-template-columns:1fr 24px 1fr;}.bundle-flow-v2 .flow-arrow:nth-of-type(2){display:none}.bundle-card{min-height:270px}.runtime-flow{grid-template-columns:1fr 32px 1fr}.runtime-flow .runtime-arrow:nth-of-type(2){display:none}.runtime-node{min-height:210px}}
+
+
+/* --- Review fixes v4: unobtrusive navigation, slide 6 fit, report zoom/inspect, whitelist script emphasis --- */
+.nav{z-index:30}.nav button{top:0;transform:none;height:100vh;width:120px;border-radius:0;background:transparent;color:transparent;opacity:1;backdrop-filter:none}.nav button::after{content:attr(data-arrow);position:absolute;top:50%;transform:translateY(-50%);width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);color:#fff;font-size:36px;backdrop-filter:blur(10px);opacity:0;transition:opacity .22s ease,background .22s ease,transform .22s ease}.nav button:hover::after,.nav button:focus-visible::after{opacity:1;background:#ff2156}.nav .prev{left:0}.nav .next{right:0}.nav .prev::after{left:18px}.nav .next::after{right:18px}.nav button:active::after{transform:translateY(-50%) scale(.96)}
+.knowledge-layout{grid-template-columns:minmax(320px,420px) minmax(0,1fr);gap:28px;align-items:start}.knowledge-visual{height:340px;padding:18px}.engineer-core{width:142px;height:142px;font-size:22px}.signal-dot{width:58px;height:58px;border-radius:18px}.d-a{left:34px;top:36px}.d-b{right:36px;top:48px}.d-c{left:42px;bottom:46px}.d-d{right:42px;bottom:42px}.l1{left:58px;right:58px;top:94px}.l2{left:58px;right:58px;bottom:94px}.l3{left:65px;right:65px;top:172px}.knowledge-table-slide .punch.small{margin-top:20px;font-size:28px}.knowledge-table-slide .tx-table{font-size:16px}.knowledge-table-slide .tx-table th,.knowledge-table-slide .tx-table td{padding:13px 15px}
+.report-browser{position:relative}.browser-bar .report-controls{margin-left:auto;display:flex;align-items:center;gap:8px}.browser-bar .report-controls button{margin-left:0;width:auto;height:28px;padding:0 11px;border-radius:999px;font-size:12px;line-height:1;color:#f5f5fb;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06)}.browser-bar .report-controls button:hover{background:rgba(255,33,86,.24);border-color:rgba(255,33,86,.6)}.browser-bar .report-controls button.active{background:#ff2156;border-color:#ff2156;color:#fff}.browser-bar .zoom-label{min-width:44px;text-align:center;color:#bdbdd0;font-size:12px;font-weight:800}.browser-bar .close-dot{margin-left:0;width:28px;height:28px;border-radius:50%;font-size:20px;line-height:20px;color:#ff6386}.report-inspect-hint{position:absolute;right:16px;top:54px;z-index:3;padding:8px 12px;border-radius:999px;background:rgba(255,33,86,.88);color:#fff;font-size:12px;font-weight:900;box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.2s}.report-browser.inspecting .report-inspect-hint{opacity:1}.report-focus-modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:60px;background:rgba(5,4,14,.72);backdrop-filter:blur(8px)}.report-focus-modal.open{display:flex}.report-focus-panel{max-width:min(1100px,86vw);max-height:82vh;overflow:auto;border-radius:26px;border:1px solid rgba(255,255,255,.16);background:#111122;box-shadow:0 30px 90px rgba(0,0,0,.55);padding:26px}.report-focus-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;color:#ff5b80;font-weight:900;letter-spacing:2px;text-transform:uppercase}.report-focus-head button{border:0;border-radius:999px;background:#ff2156;color:#fff;font-weight:900;padding:8px 14px;cursor:pointer}.report-focus-body{--bg:#0f0f17;--card:#1a1a2e;--card-border:#2a2a45;--text:#e8e8f0;--muted:#aaaac0;--accent:#ff2156;--high:#db3d44;--medium:#e06c30;--low:#c49b00;--ok:#1dbf68;color:var(--text);font-size:22px;line-height:1.6}.report-focus-body *{max-width:100%;line-height:1.6!important}.report-focus-body .card,.report-focus-body .kpi-card,.report-focus-body .health-item,.report-focus-body .assess-block,.report-focus-body table,.report-focus-body tr{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px;margin:0 0 12px}.report-focus-body table{border-collapse:separate;border-spacing:0;width:100%}.report-focus-body th,.report-focus-body td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.12);text-align:left}.report-focus-body code,.report-focus-body .ev-tag{font-family:SFMono-Regular,Consolas,monospace;background:rgba(255,255,255,.08);border-radius:8px;padding:3px 7px;color:#c6f8ff;word-break:break-word}.report-focus-body .card-title{color:#ff5b80;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.whitelist-oldstyle-slide .applied-card{border-color:rgba(255,33,86,.58);box-shadow:inset 0 0 0 1px rgba(255,33,86,.18),0 24px 80px rgba(255,33,86,.08)}.applied-card .scope-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,33,86,.45);background:rgba(255,33,86,.12);color:#fff;font-size:15px;font-weight:900}.applied-card .scope-kicker::before{content:"●";color:#ff2156}.applied-card li.script-hot{font-weight:900;color:#fff}.applied-card li.script-hot::before{content:"◆";color:#ff2156}.script-chip-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.script-chip-row span{font-family:SFMono-Regular,Consolas,monospace;border:1px solid rgba(255,33,86,.55);background:rgba(255,33,86,.13);color:#ffc1ce;border-radius:999px;padding:10px 14px;font-weight:900}.whitelist-oldstyle-slide .punch.small span{color:#ff2156}
+@media(max-width:1100px){.nav button{width:86px}.knowledge-layout{grid-template-columns:1fr}.knowledge-visual{height:300px}.report-focus-modal{padding:24px}.report-focus-body{font-size:18px}}
+
+/* --- Max review fixes v4 --- */
+.knowledge-table-slide h1{margin-bottom:10px}
+.knowledge-table-slide .subtitle{margin-bottom:20px}
+.knowledge-card-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:26px}
+.knowledge-card{min-height:285px;border-radius:26px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);padding:24px;position:relative;overflow:hidden}
+.knowledge-card::after{content:"";position:absolute;right:-38px;bottom:-42px;width:130px;height:130px;border-radius:50%;background:rgba(255,33,86,.10)}
+.knowledge-card small{display:block;color:#8f8faa;font-weight:900;letter-spacing:2px;margin-bottom:18px;text-transform:uppercase}
+.knowledge-card b{display:block;font-size:26px;line-height:1.15;margin-bottom:16px;color:#fff}
+.knowledge-card span{display:block;color:#c9c9d6;line-height:1.5;font-size:17px}
+.knowledge-card em{position:absolute;right:22px;bottom:20px;font-style:normal;color:#ff2156;font-weight:900;font-size:34px;opacity:.9}
+.knowledge-table-slide .punch.small{font-size:30px;margin-top:30px}
+.triage-card h3{margin-bottom:22px}
+.triage-choice{margin-top:12px;display:grid;grid-template-columns:1fr;gap:10px}
+.triage-choice .branch{display:flex;align-items:center;gap:10px;color:#ff2156;font-weight:900;font-size:22px}
+.triage-choice .branch span{flex:1;border:1px solid rgba(255,33,86,.45);background:rgba(255,33,86,.10);border-radius:999px;padding:9px 14px;color:#fff;font-size:18px;text-align:center;letter-spacing:.2px}
+.triage-choice .fallback{margin-top:4px;color:#9f9fb8;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+@media(max-width:1400px){.knowledge-card-grid{grid-template-columns:repeat(3,1fr)}.knowledge-card{min-height:220px}}
+@media(max-width:1100px){.knowledge-card-grid{grid-template-columns:1fr}.knowledge-card{min-height:180px}}
+
+
+/* --- Review fixes v5: restore scroll, avoid footer overlap, add top-to-bottom triage connector --- */
+.nav{pointer-events:none;z-index:30}
+.nav button{position:absolute;top:50%;transform:translateY(-50%);width:64px;height:64px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;font-size:38px;cursor:pointer;pointer-events:auto;backdrop-filter:blur(10px);opacity:0;transition:opacity .2s ease,background .2s ease,transform .2s ease}
+.nav button::after{content:none!important}
+.nav button:hover,.nav button:focus-visible{opacity:1;background:#ff2156;transform:translateY(-50%) scale(1.03)}
+.nav .prev{left:18px}.nav .next{right:18px}
+.deck:hover .nav button{opacity:.18}
+.nav button:hover,.nav button:focus-visible{opacity:1}
+.system-overview{padding-bottom:48px}
+.system-overview h1{font-size:48px;max-width:1180px;margin-bottom:18px}
+.system-overview .architecture{margin-top:14px}
+.system-overview .arch-row{gap:16px}
+.system-overview .arch-card{padding:20px 22px;min-height:170px}
+.system-overview .arch-card h3{font-size:24px}
+.system-overview .arch-card p{font-size:17px;margin-bottom:0}
+.triage-down-connector{display:flex;align-items:center;justify-content:center;gap:14px;margin:14px auto 12px;color:#d9d9e8;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+.triage-down-connector span{font-size:13px;color:#8f8faa}
+.triage-down-connector b{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(255,33,86,.16);border:1px solid rgba(255,33,86,.48);color:#ff2156;font-size:32px;line-height:1;box-shadow:0 0 28px rgba(255,33,86,.18)}
+.system-overview .arch-lanes{margin-top:0;gap:16px}
+.system-overview .arch-lanes div{min-height:132px;padding:20px 22px}
+.system-overview .arch-lanes b{font-size:22px;margin-bottom:12px}
+.system-overview .arch-lanes span{font-size:18px}
+.system-overview .arch-output{margin-top:16px;padding:22px 24px}
+.system-overview .footer{position:relative;bottom:auto;left:auto;margin-top:14px;padding-left:18px;color:#777792}
+@media(max-width:1300px){.system-overview .arch-row{flex-direction:column}.system-overview .arch-arrow{transform:rotate(90deg);height:28px}.triage-down-connector{margin:18px auto}.system-overview .arch-lanes{grid-template-columns:1fr 1fr}.system-overview .footer{margin-top:18px}}
+@media(max-width:900px){.nav button{width:54px;height:54px}.system-overview .arch-lanes{grid-template-columns:1fr}.system-overview h1{font-size:38px}}
+
+
+/* --- Review fixes v6: remove footer slogan globally, refine slide 4 bottom badges --- */
+.slide > .footer{display:none !important}
+.manual-bundle .bundle-card{padding-bottom:110px}
+.manual-bundle .icon-pill,.manual-bundle .ticket-mini,.manual-bundle .extract-mini{
+  min-width:170px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  gap:6px;
+  border:1px solid rgba(255,33,86,.38);
+  background:linear-gradient(180deg,rgba(255,33,86,.12),rgba(255,33,86,.06));
+  color:#ff4f7a;
+  border-radius:20px;
+  padding:16px 18px;
+  box-shadow:inset 0 0 0 1px rgba(255,33,86,.12);
+}
+.manual-bundle .icon-pill{font-size:20px}
+.manual-bundle .icon-pill::before{content:"SUPPORT BUNDLE";font-size:11px;letter-spacing:1.7px;color:#ff9ab1;font-weight:800}
+.manual-bundle .ticket-mini{font-size:20px}
+.manual-bundle .ticket-mini span{display:block;color:#d8d8e4;font-size:14px;margin-top:0}
+.manual-bundle .extract-mini{font-size:20px}
+.manual-bundle .extract-mini::before{content:"LOCAL PREP";font-size:11px;letter-spacing:1.7px;color:#ff9ab1;font-weight:800}
+
+
+/* --- Review fixes v7: compact slide 4 cards and move badges upward --- */
+.manual-bundle.bundle-fixed .bundle-flow-v2{
+  align-items:start;
+  margin-top:24px;
+}
+.manual-bundle.bundle-fixed .bundle-card{
+  height:620px;
+  min-height:0;
+  padding-bottom:88px;
+}
+.manual-bundle.bundle-fixed .icon-pill,
+.manual-bundle.bundle-fixed .ticket-mini,
+.manual-bundle.bundle-fixed .extract-mini{
+  bottom:30px;
+}
+.manual-bundle.bundle-fixed .bundle-card.sources .source-pills{
+  margin-top:22px;
+}
+@media(max-width:1300px){
+  .manual-bundle.bundle-fixed .bundle-card{height:auto;min-height:300px;}
+}
+
+
+
+/* --- Review fixes v8: actual compact slide 4 layout --- */
+.manual-bundle.bundle-fixed h1{font-size:50px;margin-bottom:14px;}
+.manual-bundle.bundle-fixed .subtitle{font-size:20px;margin-bottom:18px;max-width:1050px;}
+.manual-bundle.bundle-fixed .bundle-flow-v2{
+  align-items:stretch;
+  margin-top:18px;
+  gap:12px;
+  grid-template-columns:1fr 28px 1fr 28px 1fr 28px 1fr;
+}
+.manual-bundle.bundle-fixed .bundle-card{
+  height:470px !important;
+  min-height:0 !important;
+  padding:22px 22px 78px;
+  border-radius:22px;
+}
+.manual-bundle.bundle-fixed .bundle-card .num{
+  width:48px;height:48px;font-size:24px;margin-bottom:22px;
+}
+.manual-bundle.bundle-fixed .bundle-card h3{
+  font-size:25px;
+  line-height:1.12;
+  margin-bottom:14px;
+}
+.manual-bundle.bundle-fixed .bundle-card p{
+  font-size:16px;
+  line-height:1.38;
+}
+.manual-bundle.bundle-fixed .flow-arrow{
+  font-size:30px;
+}
+.manual-bundle.bundle-fixed .icon-pill,
+.manual-bundle.bundle-fixed .ticket-mini,
+.manual-bundle.bundle-fixed .extract-mini{
+  bottom:26px !important;
+  right:22px;
+  min-width:150px;
+  padding:13px 16px;
+  border-radius:16px;
+  font-size:18px;
+}
+.manual-bundle.bundle-fixed .icon-pill::before,
+.manual-bundle.bundle-fixed .extract-mini::before{
+  font-size:10px;
+}
+.manual-bundle.bundle-fixed .ticket-mini span{font-size:13px;}
+.manual-bundle.bundle-fixed .bundle-card.sources{padding-bottom:22px;}
+.manual-bundle.bundle-fixed .bundle-card.sources .source-pills{
+  margin-top:16px;
+  gap:7px;
+}
+.manual-bundle.bundle-fixed .bundle-card.sources .source-pills span{
+  padding:7px 11px;
+  font-size:14px;
+  border-radius:11px;
+}
+@media(max-width:1300px){
+  .manual-bundle.bundle-fixed .bundle-flow-v2{grid-template-columns:1fr 24px 1fr;}
+  .manual-bundle.bundle-fixed .bundle-card{height:auto !important;min-height:300px !important;}
+}
+
+
+/* --- Review fixes v9: reimagine slide 4 with prep-flow + expansion panel --- */
+.manual-bundle .bundle-flow-v2{display:none !important}
+.manual-bundle .bundle-alt{display:grid;grid-template-columns:1.1fr 70px .95fr;gap:22px;align-items:center;margin-top:18px}
+.manual-bundle .prep-col{display:grid;gap:14px}
+.manual-bundle .prep-step{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.10);border-radius:26px;padding:20px 24px;display:grid;grid-template-columns:74px 1fr auto;gap:18px;align-items:center;min-height:118px}
+.manual-bundle .prep-step .num{width:54px;height:54px;border-radius:50%;border:3px solid #ff2156;color:#ff2156;display:grid;place-items:center;font-size:26px;font-weight:900}
+.manual-bundle .prep-copy h3{font-size:26px;line-height:1.1;margin:0 0 8px}
+.manual-bundle .prep-copy p{font-size:17px;line-height:1.45;color:#c8c8d5;margin:0;max-width:520px}
+.manual-bundle .prep-badge{border:1px solid rgba(255,33,86,.38);background:linear-gradient(180deg,rgba(255,33,86,.12),rgba(255,33,86,.06));color:#ff5a83;border-radius:18px;padding:14px 16px;min-width:170px;box-shadow:inset 0 0 0 1px rgba(255,33,86,.10)}
+.manual-bundle .prep-badge small{display:block;font-size:11px;letter-spacing:1.7px;color:#ffafc0;text-transform:uppercase;font-weight:800;margin-bottom:5px}
+.manual-bundle .prep-badge b{display:block;font-size:18px;line-height:1.2;color:#ff5a83}
+.manual-bundle .prep-badge span{display:block;font-size:14px;color:#ececf4;margin-top:2px;font-weight:800}
+.manual-bundle .prep-connector{display:grid;place-items:center;color:#ff2156;font-size:46px;font-weight:900}
+.manual-bundle .expand-panel{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.10);border-radius:30px;padding:28px 28px 24px;min-height:408px;display:flex;flex-direction:column}
+.manual-bundle .expand-head{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.manual-bundle .expand-head .num{width:56px;height:56px;border-radius:50%;border:3px solid #ff2156;color:#ff2156;display:grid;place-items:center;font-size:28px;font-weight:900;flex:0 0 auto}
+.manual-bundle .expand-head h3{font-size:34px;line-height:1.05;margin:0}
+.manual-bundle .expand-panel p{font-size:18px;line-height:1.5;color:#c8c8d5;margin:0 0 18px}
+.manual-bundle .source-chip-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.manual-bundle .source-chip{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);border-radius:14px;padding:14px 16px;font-size:20px;font-weight:800;color:#f4f4fb}
+.manual-bundle .expand-note{margin-top:auto;padding-top:18px;color:#8f8faa;font-size:14px;letter-spacing:1px;text-transform:uppercase}
+@media(max-width:1400px){.manual-bundle .bundle-alt{grid-template-columns:1fr;gap:18px}.manual-bundle .prep-connector{transform:rotate(90deg);font-size:40px}.manual-bundle .expand-panel{min-height:auto}.manual-bundle .source-chip-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.manual-bundle .prep-step{grid-template-columns:1fr;align-items:flex-start}.manual-bundle .prep-badge{min-width:0;width:100%}.manual-bundle .source-chip-grid{grid-template-columns:1fr}}
+
+
+/* --- Review fixes v10: unify / soften slide backgrounds --- */
+.slide{
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255,33,86,.10), transparent 32%),
+    linear-gradient(180deg, #1a1330 0%, #131028 55%, #0d0a1d 100%) !important;
+}
+.slide::before{
+  inset:0 !important;
+  background:
+    radial-gradient(circle at 52% 12%, rgba(255,33,86,.08), transparent 28%),
+    radial-gradient(circle at 18% 82%, rgba(255,255,255,.025), transparent 24%),
+    radial-gradient(circle at 86% 72%, rgba(255,255,255,.018), transparent 22%) !important;
+  opacity:1 !important;
+}
+.slide::after{
+  right:13% !important;
+  top:13% !important;
+  width:150px !important;
+  height:56px !important;
+  background:rgba(193,6,59,.82) !important;
+  border-radius:999px !important;
+  transform:rotate(-44deg) !important;
+  box-shadow:
+    -560px 34px 0 0 rgba(193,6,59,.82),
+    -48px 395px 0 0 rgba(193,6,59,.82) !important;
+  opacity:.76 !important;
+}
+
+
+/* --- Review fixes v11: remove red capsule decorations, use subtle unified technical background --- */
+.slide{
+  background:
+    radial-gradient(circle at 50% 7%, rgba(255,33,86,.07), transparent 30%),
+    radial-gradient(circle at 82% 16%, rgba(255,33,86,.045), transparent 22%),
+    linear-gradient(180deg, #17122b 0%, #110e24 56%, #0c0919 100%) !important;
+}
+
+/* soft technical grid instead of large red slashes */
+.slide::before{
+  inset:0 !important;
+  background:
+    linear-gradient(rgba(255,255,255,.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px),
+    radial-gradient(circle at 18% 82%, rgba(255,255,255,.018), transparent 26%) !important;
+  background-size: 96px 96px, 96px 96px, auto !important;
+  opacity:.42 !important;
+  transform:none !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  pointer-events:none !important;
+  -webkit-mask-image: radial-gradient(circle at 50% 45%, black 0%, rgba(0,0,0,.7) 52%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 45%, black 0%, rgba(0,0,0,.7) 52%, transparent 100%);
+}
+
+/* replace the three red capsules with a small ambient glow */
+.slide::after{
+  content:"" !important;
+  position:absolute !important;
+  right:72px !important;
+  top:74px !important;
+  width:200px !important;
+  height:200px !important;
+  border-radius:50% !important;
+  background:radial-gradient(circle, rgba(255,33,86,.10), rgba(255,33,86,.032) 44%, transparent 68%) !important;
+  transform:none !important;
+  box-shadow:none !important;
+  opacity:.68 !important;
+  pointer-events:none !important;
+}
+
+/* ensure no previous capsule backgrounds leak through page-specific overrides */
+.slide .bg-pill,
+.slide .capsule,
+.slide .red-slash{
+  display:none !important;
+}
+
+
+.muted-card {
+  opacity: 0.72;
+  border-style: dashed;
+}
+</style>
+<style>
+.agent-handoff-slide .slide-content {
+  max-width: 1580px;
+}
+
+.agent-flow {
+  margin-top: 24px;
+  display: grid;
+  grid-template-rows: auto auto auto auto auto auto auto;
+  gap: 16px;
+}
+
+.flow-row,
+.flow-row.top-flow {
+  display: grid;
+  grid-template-columns: 1fr 72px 1fr 72px 1fr;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: 1460px;
+  margin: 0 auto;
+}
+
+.flow-row.top-flow .flow-box {
+  min-height: 118px;
+}
+
+.flow-row.single-flow {
+  display: flex;
+  justify-content: center;
+}
+
+.flow-box {
+  width: 100%;
+  min-width: 0;
+  padding: 18px 24px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 12px 34px rgba(0,0,0,0.22);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.flow-box.primary {
+  background: linear-gradient(135deg, rgba(255,36,92,0.98), rgba(255,51,93,0.82));
+  border-color: rgba(255,255,255,0.22);
+}
+
+.flow-box h3 {
+  margin: 0 0 8px;
+  font-size: 1.03rem;
+}
+
+.flow-box p {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.42;
+  opacity: 0.78;
+}
+
+.flow-arrow-inline {
+  color: #ff2b62;
+  font-size: 2.1rem;
+  font-weight: 900;
+  opacity: 0.95;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-down {
+  text-align: center;
+  color: #ff2b62;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.95;
+  margin: -2px 0;
+}
+
+.parallel-zone {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 28px 24px;
+  border-radius: 30px;
+  border: 1px solid rgba(255,43,98,0.32);
+  background: rgba(255,43,98,0.045);
+  position: relative;
+}
+
+.parallel-title {
+  position: absolute;
+  top: -14px;
+  left: 32px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #ff2b62;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.agent-card {
+  padding: 15px 16px;
+  min-height: 86px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.065);
+  border: 1px solid rgba(255,255,255,0.12);
+  text-align: left;
+}
+
+.agent-card h4 {
+  margin: 0 0 7px;
+  font-size: 0.92rem;
+  color: #fff;
+}
+
+.agent-card p {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.38;
+  opacity: 0.74;
+}
+
+.parallel-hint {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 0.78rem;
+  opacity: 0.72;
+}
+
+.merge-row {
+  display: grid;
+  grid-template-columns: 1fr 72px 1fr 72px 1fr;
+  align-items: stretch;
+  gap: 0;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.merge-row .flow-box {
+  min-height: 112px;
+}
+
+.muted-card {
+  opacity: 0.72;
+  border-style: dashed;
+}
+
+.key-takeaway-slide .slide-content {
+  max-width: 1500px;
+}
+
+.takeaway-grid {
+  margin-top: 42px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.takeaway-card {
+  min-height: 210px;
+  padding: 28px 30px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.055);
+  border: 1px solid rgba(255,255,255,0.11);
+  box-shadow: 0 14px 38px rgba(0,0,0,0.24);
+}
+
+.takeaway-card .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: #ff2b62;
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 900;
+  margin-bottom: 18px;
+}
+
+.takeaway-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+}
+
+.takeaway-card p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.68;
+  opacity: 0.82;
+}
+
+.takeaway-bottom {
+  margin-top: 34px;
+  padding: 26px 30px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(255,36,92,0.24), rgba(255,255,255,0.045));
+  border: 1px solid rgba(255,43,98,0.35);
+  font-size: 1.32rem;
+  line-height: 1.55;
+  font-weight: 800;
+}
+
+.takeaway-bottom span {
+  color: #ff2b62;
+}
+
+@media (max-width: 1100px) {
+  .flow-row,
+  .flow-row.top-flow,
+  .merge-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .flow-arrow-inline {
+    transform: rotate(90deg);
+  }
+  .agent-grid,
+  .takeaway-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+<style id="cover-v23-css">
+.cover-image-slide {
+  position: absolute !important;
+  inset: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  background: #050512 !important;
+}
+
+.cover-image-slide::before,
+.cover-image-slide::after {
+  display: none !important;
+  content: none !important;
+}
+
+.cover-image-slide .cover-full-image {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+  visibility: visible !important;
+  z-index: 5 !important;
+}
+
+.cover-image-slide > * {
+  position: absolute !important;
+  z-index: 5 !important;
+}
+
+.key-takeaway-slide .takeaway-grid {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+}
+
+.key-takeaway-slide .takeaway-card {
+  min-height: 188px !important;
+  padding: 22px 24px !important;
+}
+
+.key-takeaway-slide .takeaway-card h3 {
+  font-size: 1.06rem !important;
+}
+
+.key-takeaway-slide .takeaway-card p {
+  font-size: 0.82rem !important;
+  line-height: 1.55 !important;
+}
+
+@media (max-width: 1100px) {
+  .key-takeaway-slide .takeaway-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+<style id="cover-v25-css">
+.cover-image-slide {
+  position: absolute !important;
+  inset: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  background: #050512 !important;
+}
+.cover-image-slide .cover-full-image {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  display: block !important;
+  visibility: visible !important;
+  z-index: 5 !important;
+}
+</style>
+<style id="telemetry-layer-v28-css">
+.telemetry-layer-slide h1{font-size:56px;margin-bottom:34px;max-width:1300px}
+.telemetry-layer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:20px}
+.telemetry-layer-card{min-height:438px;border-radius:28px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.032));padding:30px 30px 26px;box-shadow:0 20px 60px rgba(0,0,0,.26);overflow:hidden;position:relative}
+.telemetry-layer-card::after{content:"";position:absolute;right:-46px;top:-46px;width:150px;height:150px;border-radius:50%;background:rgba(255,33,86,.10);pointer-events:none}
+.layer-head{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+.layer-icon{width:68px;height:68px;border-radius:22px;display:grid;place-items:center;background:rgba(255,33,86,.14);border:1px solid rgba(255,33,86,.45);box-shadow:0 0 32px rgba(255,33,86,.12);flex:0 0 auto}
+.layer-icon svg{width:38px;height:38px;fill:none;stroke:#ff4f7a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.telemetry-layer-card small{display:block;color:#9c9bb7;font-weight:900;letter-spacing:4px;margin-bottom:8px}
+.telemetry-layer-card h3{font-size:34px;line-height:1.08;margin:0;letter-spacing:-.7px}
+.telemetry-layer-card p{font-size:20px;line-height:1.45;color:#cfcfde;margin:0 0 24px;min-height:58px}
+.telemetry-table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:rgba(8,8,18,.30)}
+.telemetry-table th{padding:13px 15px;text-align:left;background:rgba(255,33,86,.18);font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:#fff}
+.telemetry-table td{padding:13px 15px;border-top:1px solid rgba(255,255,255,.085);font-size:16px;line-height:1.35;color:#d8d8e5;vertical-align:top}
+.telemetry-table td:first-child{font-weight:900;color:#fff;white-space:nowrap}
+.telemetry-bottom-line{margin-top:32px;padding:22px 28px;border-radius:24px;border:1px solid rgba(255,33,86,.36);background:linear-gradient(135deg,rgba(255,33,86,.17),rgba(255,255,255,.035));font-size:29px;font-weight:900;letter-spacing:-.5px;max-width:1140px}
+@media(max-width:1300px){.telemetry-layer-grid{grid-template-columns:1fr}.telemetry-layer-card{min-height:auto}.telemetry-layer-slide h1{font-size:44px}.telemetry-bottom-line{font-size:24px}}
+</style>
+<style id="slide9-synthesis-output-css">
+
+/* --- Max edit: slide 9 split synthesis and output into separate layers --- */
+.system-overview .analysis-lanes{
+  grid-template-columns:repeat(3,1fr);
+  max-width:1180px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.system-overview .synthesis-connector,
+.system-overview .output-connector{
+  margin:10px auto 8px;
+}
+.synthesis-layer-card{
+  max-width:1180px;
+  margin:0 auto;
+  padding:20px 28px;
+  border-radius:24px;
+  background:linear-gradient(135deg,rgba(255,33,86,.19),rgba(255,255,255,.045));
+  border:1px solid rgba(255,33,86,.48);
+  box-shadow:0 18px 48px rgba(0,0,0,.22), inset 0 0 0 1px rgba(255,33,86,.12);
+  display:grid;
+  grid-template-columns:180px 260px 1fr;
+  gap:18px;
+  align-items:center;
+}
+.synthesis-layer-card small{
+  color:#ff9ab1;
+  font-weight:900;
+  letter-spacing:2px;
+}
+.synthesis-layer-card b{
+  font-size:28px;
+  color:#fff;
+}
+.synthesis-layer-card span{
+  color:#dedeea;
+  font-size:18px;
+  line-height:1.45;
+}
+.system-overview .output-layer-card{
+  max-width:1180px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:0;
+  justify-content:center;
+  border-color:rgba(255,255,255,.14);
+}
+@media(max-width:1300px){
+  .system-overview .analysis-lanes{grid-template-columns:1fr 1fr;}
+  .synthesis-layer-card{grid-template-columns:1fr;gap:8px;text-align:left;}
+}
+@media(max-width:900px){
+  .system-overview .analysis-lanes{grid-template-columns:1fr;}
+}
+</style>
+</head><body><div class="deck">
+<section class="slide cover active">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">01 / 24</div></div>
+<div class="eyebrow">PRODUCTION TRIAGE × AI</div>
+<h1>How I Turned<br/>Production Triage<br/>Into an <span>AI System</span></h1>
+<div class="subtitle">From manual log reading to a local-first multi-agent workflow — built around real Product Console support cases, known issues, and repeatable evidence.</div>
+<div class="tag"><span></span>Max Weng</div>
+<div class="hero-metrics">
+<div><b>Evidence first</b><small>Collect structured signals before asking AI to conclude.</small></div>
+<div><b>Agent workflow</b><small>Dispatch focused analyzers instead of one giant prompt.</small></div>
+<div><b>Known cases</b><small>Use solved issues to refine skills and reduce repeated misses.</small></div>
+</div>
+</section>
+<section class="slide">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">02 / 24</div></div>
+<div class="eyebrow">AGENDA</div>
+<h1>How the system evolved</h1>
+<div class="agenda">
+<div><span>01</span><b>Before AI</b><small>How SEG cases were investigated manually</small></div>
+<div><span>02</span><b>First Triage System</b><small>Local-first architecture and multi-agent flow</small></div>
+<div><span>03</span><b>Improving The AI System</b><small>Feedback loop with known-answer cases</small></div>
+<div><span>04</span><b>Whitelist</b><small>Reduce noise, token usage, and false focus</small></div>
+<div><span>05</span><b>AI-Friendly Production Logs</b><small>Design observability for machine reasoning</small></div>
+</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide chapter">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">03 / 24</div></div>
+<div class="eyebrow">CHAPTER 01</div>
+<h1>Before AI</h1>
+<div class="subtitle">Production triage was manual, fragmented, and highly dependent on engineer experience.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide manual-bundle bundle-fixed"><div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">04 / 24</div></div>
+<div class="eyebrow">SEG CASE REALITY</div>
+<h1>Manual triage started from the bundle</h1>
+<div class="subtitle">Before AI could reason, the engineer first prepared the customer case context and expanded the on-prem log bundle.</div>
+<div class="bundle-alt">
+<div class="prep-col">
+<div class="prep-step">
+<div class="num">1</div>
+<div class="prep-copy">
+<h3>Customer uploads tar.gz bundle</h3>
+<p>One compressed debug package from an on-prem environment.</p>
+</div>
+<div class="prep-badge"><small>Support bundle</small><b>Bundle package</b></div>
+</div>
+<div class="prep-step">
+<div class="num">2</div>
+<div class="prep-copy">
+<h3>Download logs and read Jira</h3>
+<p>Understand symptom, time range, version, and module.</p>
+</div>
+<div class="prep-badge"><small>Case context</small><b>Jira context</b><span>SEG-12345</span></div>
+</div>
+<div class="prep-step">
+<div class="num">3</div>
+<div class="prep-copy">
+<h3>Extract tar.gz locally</h3>
+<p>Prepare local investigation data without changing the original bundle.</p>
+</div>
+<div class="prep-badge"><small>Local prep</small><b>Unpack → logs</b></div>
+</div>
+</div>
+<div class="prep-connector">→</div>
+<div class="expand-panel">
+<div class="expand-head">
+<div class="num">4</div>
+<h3>Expand<br/>data sources</h3>
+</div>
+<p>Separate the bundle into focused investigation surfaces for the next analysis steps.</p>
+<div class="source-chip-grid">
+<div class="source-chip">journal</div>
+<div class="source-chip">application</div>
+<div class="source-chip">metrics</div>
+<div class="source-chip">upgrade logs</div>
+<div class="source-chip">system info</div>
+</div>
+<div class="expand-note">Focused investigation surfaces</div>
+</div>
+</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div></section>
+<section class="slide">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">05 / 24</div></div>
+<div class="eyebrow">MANUAL BRANCHING</div>
+<h1>Different problems needed different investigation paths</h1>
+<div class="cards-3">
+<div class="card"><small>FUNCTIONAL ISSUE</small><h3>Feature not working</h3><p>Start from applicationd and journal, then map errors back to service modules.</p><div class="chips"><span>applicationd</span><span>journal</span><span>system health</span><span>docker status</span></div></div>
+<div class="card"><small>PERFORMANCE ISSUE</small><h3>Slow or degraded</h3><p>Read metrics snapshots, database signals, then correlate with slow SQL logs.</p><div class="chips"><span>metrics</span><span>slow SQL</span><span>DB status</span></div></div>
+<div class="card"><small>UPGRADE ISSUE</small><h3>Upgrade failure</h3><p>Rebuild the upgrade timeline from journal and firmware-related logs.</p><div class="chips"><span>upgrade log</span><span>journal</span></div></div>
+</div>
+<div class="punch">Triage was never <span>a single workflow</span>.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide knowledge-table-slide"><div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">06 / 24</div></div>
+<div class="eyebrow">TRIBAL KNOWLEDGE</div>
+<h1>Experience was the real search engine</h1>
+<div class="subtitle">Good first-line triage was built from repeated incidents, not from one perfect query.</div>
+<div class="knowledge-card-grid">
+<div class="knowledge-card"><small>Known Issue</small><b>Symptom matches past SEG cases</b><span>Check version, fix history, and whether the customer is already on the corrected build.</span><em>01</em></div>
+<div class="knowledge-card"><small>DB Signal</small><b>Slow SQL + high PG activity</b><span>Correlate metrics, query patterns, connection count, and table growth.</span><em>02</em></div>
+<div class="knowledge-card"><small>Upgrade</small><b>Failure around version transition</b><span>Rebuild the timeline from upgrade-info, journal, and newly appearing errors.</span><em>03</em></div>
+<div class="knowledge-card"><small>Service</small><b>Journal errors by component</b><span>Map service failures back to the customer-facing symptom and API behavior.</span><em>04</em></div>
+<div class="knowledge-card"><small>Noise</small><b>Repeated harmless patterns</b><span>Filter routine warnings before they become false leads in the investigation.</span><em>05</em></div>
+</div>
+<div class="punch small">The best support engineers were built from <span>accumulated incidents</span>.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div></section>
+<section class="slide chapter split">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">07 / 24</div></div>
+<div class="eyebrow">WHY THIS PROJECT EXISTS</div>
+<h1>The challenge wasn’t lack of data.<br/><span>It was human correlation capacity.</span></h1>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide chapter">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">08 / 24</div></div>
+<div class="eyebrow">CHAPTER 02</div>
+<h1>First Triage System</h1>
+<div class="subtitle">Turn manual investigation knowledge into a structured and repeatable AI workflow.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide system-overview">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">09 / 24</div></div>
+<div class="eyebrow">SYSTEM OVERVIEW</div>
+<h1>Ticket context decides where the investigation should go</h1>
+<div class="architecture">
+<div class="arch-row top">
+<div class="arch-card input"><small>INPUT</small><h3>Jira ticket / issue description<br/>+ customer tar.gz bundle</h3></div>
+<div class="arch-arrow">→</div>
+<div class="arch-card"><small>MCP FIRST</small><h3>jira-context-agent</h3><p>Read Jira case context and write <b>jira-context.json</b></p></div>
+<div class="arch-arrow">→</div>
+<div class="arch-card accent triage-card"><small>ORCHESTRATOR</small><h3>Triage</h3><div class="triage-choice"><div class="branch">↘ <span>Error</span></div><div class="branch">→ <span>Performance</span></div><div class="branch">↗ <span>Upgrade</span></div><div class="fallback">Generic fallback when signal is unclear</div></div></div>
+</div>
+<div aria-hidden="true" class="triage-down-connector">
+<span>selected path</span>
+<b>↓</b>
+</div>
+<div class="arch-lanes system-lanes analysis-lanes">
+<div><b>Error path</b><span>error-analyzer<br/>system-health-analyzer</span></div>
+<div><b>Performance path</b><span>performance-analyzer<br/>pg-metrics-analyzer</span></div>
+<div><b>Upgrade path</b><span>upgrade-analyzer<br/>timeline reconstruction</span></div>
+</div>
+<div aria-hidden="true" class="triage-down-connector synthesis-connector">
+<span>merge findings</span>
+<b>↓</b>
+</div>
+<div class="synthesis-layer-card">
+<small>SYNTHESIS LAYER</small>
+<b>correlation-agent</b>
+<span>Merge timeline · cross-validate findings · rule out weak hypotheses · synthesize root cause</span>
+</div>
+<div aria-hidden="true" class="triage-down-connector output-connector">
+<span>finalize output</span>
+<b>↓</b>
+</div>
+<div class="arch-output output-layer-card"><b>Output Layer</b><span>report-writer → Markdown report · Jira summary · Visual HTML report</span></div>
+</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide evidence-slide scrollable">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">10 / 24</div></div>
+<div class="eyebrow">CORE DESIGN</div>
+<h1>Evidence-first architecture</h1>
+<div class="subtitle">AI does not directly analyze raw logs. It reasons on structured evidence artifacts.</div>
+<div class="pipeline compact">
+<div class="node">Raw logs</div><div class="arrow">→</div><div class="node">Deterministic scripts</div><div class="arrow">→</div><div class="node hot">Evidence JSON</div><div class="arrow">→</div><div class="node">AI analyzers</div><div class="arrow">→</div><div class="node">Report</div>
+</div>
+<div class="evidence-table-wrap">
+<table class="evidence-table">
+<thead><tr><th>Evidence artifact</th><th>Purpose</th><th>Used by</th></tr></thead>
+<tbody>
+<tr><td>jira-context.json</td><td>Normalized Jira case context: symptom, labels, version, customer, priority.</td><td>orchestrator, report-writer</td></tr>
+<tr><td>application-error-summary.json</td><td>Raw error / warning extraction from application logs.</td><td>error-analyzer, mode selection</td></tr>
+<tr><td>application-error-normalized.json</td><td>Grouped signatures after UUID/IP/timestamp normalization.</td><td>error-analyzer, correlation-agent</td></tr>
+<tr><td>application-slow-queries.json</td><td>Slow / damn slow / critical slow SQL signals.</td><td>performance-analyzer</td></tr>
+<tr><td>domain-patterns.json</td><td>Domain-specific patterns for known symptoms and product behaviors.</td><td>orchestrator, analyzers</td></tr>
+<tr><td>journal-summary.json</td><td>Systemd journal warnings/errors grouped by service.</td><td>error-analyzer, upgrade-analyzer</td></tr>
+<tr><td>system-summary.json</td><td>Version, disk, memory, Docker, Redis, agents, PostgreSQL health.</td><td>system-health-analyzer</td></tr>
+<tr><td>metrics-import.json</td><td>Metrics import status and DuckDB preparation result.</td><td>pg-metrics-analyzer</td></tr>
+<tr><td>db-query-analysis.json</td><td>Query hotspots from delta-based query statistics analysis.</td><td>performance-analyzer</td></tr>
+<tr><td>table-growth-analysis.json</td><td>Table growth and dead tuple trends over time.</td><td>pg-metrics-analyzer</td></tr>
+<tr><td>upgrade-timeline.json</td><td>Firmware upgrade timeline and suspicious steps.</td><td>upgrade-analyzer</td></tr>
+</tbody></table>
+</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide dark agent-handoff-slide">
+<div class="bg-grid"></div>
+<div class="slide-content">
+<div class="brand">tx<span>One</span> networks</div>
+<div class="eyebrow">MULTI-AGENT DESIGN</div>
+<h1>Handoff order matters: Jira first, then evidence, then parallel analyzers</h1>
+<div class="agent-flow">
+<div class="flow-row top-flow">
+<div class="flow-box">
+<h3>Engineer Request</h3>
+<p>Jira ticket or issue description from Copilot Chat</p>
+</div>
+<div class="flow-arrow-inline">→</div>
+<div class="flow-box primary">
+<h3>triage-orchestrator</h3>
+<p>Parse input, detect Jira key, and choose the initial flow</p>
+</div>
+<div class="flow-arrow-inline">→</div>
+<div class="flow-box">
+<h3>jira-context-agent</h3>
+<p>Runs early for Jira flow: fetch ticket context and write jira-context.json</p>
+</div>
+</div>
+<div class="flow-down">↓</div>
+<div class="merge-row">
+<div class="flow-box">
+<h3>Staging Check</h3>
+<p>Verify customer log is under the expected seg-log case folder</p>
+</div>
+<div class="flow-arrow-inline">→</div>
+<div class="flow-box">
+<h3>Bootstrap Run</h3>
+<p>Create run directory, manifest, Docker runtime, and mounted workspace</p>
+</div>
+<div class="flow-arrow-inline">→</div>
+<div class="flow-box">
+<h3>File Inventory</h3>
+<p>Classify evidence scope and detect valid Product Console log roots</p>
+</div>
+</div>
+<div class="flow-down">↓</div>
+<div class="parallel-zone">
+<div class="parallel-title">PARALLEL EVIDENCE COLLECTION</div>
+<div class="agent-grid">
+<div class="agent-card">
+<h4>scan_application_errors.sh</h4>
+<p>Find error/warn logs and apply whitelist filtering</p>
+</div>
+<div class="agent-card">
+<h4>normalize_application_errors.py</h4>
+<p>Normalize UUID/IP/timestamp and cluster repeated messages</p>
+</div>
+<div class="agent-card">
+<h4>extract_journal_warnings.sh</h4>
+<p>Read journal files and summarize warnings/errors</p>
+</div>
+<div class="agent-card">
+<h4>collect_system_summary.sh</h4>
+<p>Collect disk, memory, container, Redis, and service status</p>
+</div>
+<div class="agent-card">
+<h4>scan_application_slow_queries.sh</h4>
+<p>Extract slow / damn slow / critical slow query signals</p>
+</div>
+<div class="agent-card">
+<h4>scan_upgrade_log.sh</h4>
+<p>Build upgrade timeline from upgrade logs and journal fallback</p>
+</div>
+</div>
+<div class="parallel-hint">Evidence collection is comprehensive and runs all scripts in parallel, regardless of final mode.</div>
+</div>
+<div class="flow-down">↓</div>
+<div class="flow-row single-flow">
+<div class="flow-box primary" style="max-width: 560px;">
+<h3>Mode Selection</h3>
+<p>Use Jira context + collected evidence to choose primary and secondary modes</p>
+</div>
+</div>
+<div class="flow-down">↓</div>
+<div class="parallel-zone">
+<div class="parallel-title">PARALLEL ANALYZER DISPATCH</div>
+<div class="agent-grid">
+<div class="agent-card">
+<h4>error-analyzer</h4>
+<p>Fluent errors, journal errors, system-summary correlation</p>
+</div>
+<div class="agent-card">
+<h4>system-health-analyzer</h4>
+<p>Connection health, vacuum health, container status, OOM, Redis</p>
+</div>
+<div class="agent-card">
+<h4>performance-analyzer</h4>
+<p>Slow queries, pg-stat analysis, table growth, resource bottlenecks</p>
+</div>
+<div class="agent-card">
+<h4>pg-metrics-analyzer</h4>
+<p>Deep PostgreSQL analysis using DuckDB and metrics evidence</p>
+</div>
+<div class="agent-card">
+<h4>upgrade-analyzer</h4>
+<p>Upgrade timeline, pre/post-upgrade partitioning, version mismatch</p>
+</div>
+<div class="agent-card muted-card">
+<h4>Mode-gated execution</h4>
+<p>Only agents matching selected modes are dispatched</p>
+</div>
+</div>
+<div class="parallel-hint">Analyzer agents are parallel within the selected mode set, not before Jira context or evidence collection.</div>
+</div>
+<div class="flow-down">↓</div>
+<div class="merge-row">
+<div class="flow-box">
+<h3>Timeline Build</h3>
+<p>Merge timestamps from application, journal, upgrade, and slow-query evidence</p>
+</div>
+<div class="flow-arrow-inline">→</div>
+<div class="flow-box primary">
+<h3>correlation-agent</h3>
+<p>Cross-validate findings and synthesize root-cause assessment</p>
+</div>
+<div class="flow-arrow-inline">→</div>
+<div class="flow-box">
+<h3>report-writer</h3>
+<p>Generate Markdown, Jira summary, and self-contained HTML report</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide report-embed-slide"><div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">12 / 24</div></div>
+<div class="eyebrow">FINAL OUTPUT</div>
+<h1>From raw logs to an anonymized investigation report</h1>
+<div class="report-browser">
+<div class="browser-bar"><div class="traffic"><span></span><span></span><span></span></div><b>triage-report.html</b><div class="report-controls"><button onclick="reportZoomOut()" type="button">A−</button><span class="zoom-label" id="zoomLabel">100%</span><button onclick="reportZoomIn()" type="button">A+</button><button onclick="reportZoomReset()" type="button">Reset</button><button id="inspectBtn" onclick="toggleReportInspect()" type="button">🔍 Inspect block</button></div><button class="close-dot" type="button">×</button></div><div class="report-inspect-hint">Inspect mode: click any report card, table row, or timeline item</div>
+<iframe id="reportFrame" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;title&gt;CASE-1024 — Triage Report&lt;/title&gt;
+&lt;style&gt;
+:root{--bg:#0f0f17;--card:#1a1a2e;--card-border:#2a2a45;--text:#e8e8f0;--muted:#8888aa;--accent:#7349fd;--accent-light:#a370f7;--high:#db3d44;--medium:#e06c30;--low:#c49b00;--ok:#1dbf68;--mono-bg:#12121e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;padding:0 0 48px}
+.accent-bar{height:4px;background:linear-gradient(90deg,#7349fd,#a370f7);width:100%}
+.container{max-width:1000px;margin:0 auto;padding:24px 16px 0}
+.card{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:20px 24px;margin-bottom:20px}
+.card-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:14px}
+/* header */
+.header-inner{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+h1{font-size:26px;font-weight:800;color:var(--text)}
+.subtitle{color:var(--muted);font-size:14px;margin-top:4px}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start}
+.badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;white-space:nowrap}
+.badge-defect{background:#2a1a3e;color:var(--accent-light);border:1px solid #3a2a55}
+.badge-closed{background:#1a2e1a;color:var(--ok);border:1px solid #2a452a}
+.badge-generic{background:#1a2a2e;color:#64b5f6;border:1px solid #2a3a45}
+.badge-p3{background:#2e1a1a;color:var(--medium);border:1px solid #452a2a}
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:640px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+.kpi-card{background:var(--mono-bg);border:1px solid var(--card-border);border-radius:8px;padding:14px 16px}
+.kpi-val{font-size:28px;font-weight:800;line-height:1}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi-ev{margin-top:5px}
+.kpi-errors .kpi-val{color:var(--high)}
+.kpi-warns .kpi-val{color:var(--medium)}
+.kpi-slow .kpi-val{color:var(--low)}
+.kpi-pg .kpi-val{color:var(--high)}
+/* assessment block */
+.assess-block{border-left:4px solid var(--ok);background:#0d1f1a;border-radius:0 8px 8px 0;padding:16px 20px}
+.assess-conf{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ok);margin-bottom:8px}
+.assess-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.assess-body{font-size:14px;line-height:1.6;color:#c8c8e0}
+.assess-ev{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+/* ev-tag */
+.ev-tag{display:inline-block;font-size:10px;font-family:'SF Mono',Consolas,monospace;background:#1e1e38;border:1px solid #2a2a55;color:#7878aa;padding:1px 6px;border-radius:10px;margin-top:2px;vertical-align:middle;max-width:100%;word-break:break-word}
+/* findings table */
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead tr{background:var(--mono-bg)}
+th{padding:8px 10px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-bottom:1px solid var(--card-border)}
+td{padding:8px 10px;border-bottom:1px solid var(--card-border);vertical-align:top}
+tbody tr:hover{background:#1e1e38}
+.sev-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.sev-high{background:#fff0f0;color:var(--high)}
+.sev-medium{background:#fff5e8;color:#e06c30}
+.sev-low{background:#fffbe6;color:#b88a00}
+.sev-ok{background:#e8fff4;color:#0a7a40}
+/* method badges */
+.method{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px}
+.method-post{background:#1a3a2e;color:#64d4a0}
+.method-put{background:#2e2a1a;color:#ecb62b}
+.method-delete{background:#2e1a1a;color:#db3d44}
+.method-get{background:#1a2a3e;color:#64b5f6}
+.status-badge{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;font-family:monospace}
+.s400{background:#2e1a1a;color:#db3d44}
+.s401{background:#2a2a1a;color:#c49b00}
+.s500{background:#3a1a1a;color:#ff6060}
+.signal-row{background:#1a1510!important}
+/* two-col grid */
+.two-col{display:grid;grid-template-columns:1fr 320px;gap:16px}
+@media(max-width:720px){.two-col{grid-template-columns:1fr}}
+/* timeline */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--card-border)}
+.tl-item{position:relative;margin-bottom:18px}
+.tl-dot{position:absolute;left:-24px;top:3px;width:14px;height:14px;border-radius:50%;border:2px solid var(--card)}
+.tl-dot-critical{background:var(--high)}
+.tl-dot-high{background:var(--medium)}
+.tl-dot-warn{background:var(--low)}
+.tl-dot-info{background:var(--muted)}
+.tl-dot-ok{background:var(--ok)}
+.tl-dot-gap{background:#2a2a45;border:2px dashed var(--muted)}
+.tl-time{font-size:11px;font-family:monospace;color:var(--muted)}
+.tl-desc{font-size:13px;margin-top:2px;color:var(--text)}
+/* system health grid */
+.health-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:640px){.health-grid{grid-template-columns:repeat(2,1fr)}}
+.health-item{background:var(--mono-bg);border:1px solid var(--card-border);border-radius:6px;padding:10px 12px}
+.health-label{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.health-val{font-size:18px;font-weight:700;margin-top:4px}
+.health-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.health-crit{color:var(--high)}
+.health-warn{color:var(--medium)}
+.health-ok{color:var(--ok)}
+/* data gaps */
+.gap-item{padding:8px 0;border-bottom:1px solid var(--card-border);font-size:13px}
+.gap-item:last-child{border-bottom:none}
+.gap-label{font-weight:600;color:var(--low)}
+/* PG tables */
+.db-sub{margin-bottom:16px}
+code{font-family:'SF Mono',Consolas,monospace;font-size:11px;background:var(--mono-bg);padding:1px 4px;border-radius:3px;color:#a3cfff}
+/* footer */
+.footer{text-align:center;font-size:12px;color:#5a5a78;border-top:1px solid var(--card-border);margin-top:24px;padding-top:16px}
+/* donut legend */
+.donut-legend{font-size:12px;margin-top:8px}
+.dl-item{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.dl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;accent-bar&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;container&quot;&gt;
+
+&lt;!-- HEADER --&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;header-inner&quot;&gt;
+    &lt;div&gt;
+      &lt;h1&gt;CASE-1024&lt;/h1&gt;
+      &lt;div class=&quot;subtitle&quot;&gt;Unable to save configuration changes · Example Customer · Product Console vX.Y.Z&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;badge-row&quot;&gt;
+      &lt;span class=&quot;badge badge-defect&quot;&gt;Defect&lt;/span&gt;
+      &lt;span class=&quot;badge badge-closed&quot;&gt;Closed&lt;/span&gt;
+      &lt;span class=&quot;badge badge-p3&quot;&gt;P3 · High End&lt;/span&gt;
+      &lt;span class=&quot;badge badge-generic&quot;&gt;Mode: generic&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;margin-top:12px;font-size:13px;color:var(--muted)&quot;&gt;
+    Run ID: &lt;code&gt;RUN-2026-EXAMPLE&lt;/code&gt;  ·  Generated: 2026-05-22 09:54 UTC  ·  Customer: Example Customer
+    &lt;span class=&quot;ev-tag&quot;&gt;ticket-context.json · payload.ticketKey&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- KPI ROW --&gt;
+&lt;div class=&quot;kpi-grid&quot; style=&quot;margin-bottom:20px&quot;&gt;
+  &lt;div class=&quot;kpi-card kpi-errors&quot;&gt;
+    &lt;div class=&quot;kpi-val&quot;&gt;27,312&lt;/div&gt;
+    &lt;div class=&quot;kpi-sub&quot;&gt;Total Errors&lt;/div&gt;
+    &lt;div class=&quot;kpi-ev&quot;&gt;&lt;span class=&quot;ev-tag&quot;&gt;application-error-normalized.json · totalErrors&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;kpi-card kpi-warns&quot;&gt;
+    &lt;div class=&quot;kpi-val&quot;&gt;21,290&lt;/div&gt;
+    &lt;div class=&quot;kpi-sub&quot;&gt;Total Warnings&lt;/div&gt;
+    &lt;div class=&quot;kpi-ev&quot;&gt;&lt;span class=&quot;ev-tag&quot;&gt;application-error-normalized.json · totalWarns&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;kpi-card kpi-slow&quot;&gt;
+    &lt;div class=&quot;kpi-val&quot;&gt;622&lt;/div&gt;
+    &lt;div class=&quot;kpi-sub&quot;&gt;Slow Queries (518 slow + 104 damn-slow)&lt;/div&gt;
+    &lt;div class=&quot;kpi-ev&quot;&gt;&lt;span class=&quot;ev-tag&quot;&gt;application-slow-queries.json · totalSlowEntries&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;kpi-card kpi-pg&quot;&gt;
+    &lt;div class=&quot;kpi-val&quot;&gt;381&lt;/div&gt;
+    &lt;div class=&quot;kpi-sub&quot;&gt;PG Connections (threshold 350)&lt;/div&gt;
+    &lt;div class=&quot;kpi-ev&quot;&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · dbActivity.totalConnections&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- ASSESSMENT BLOCK --&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-title&quot;&gt;Assessment&lt;/div&gt;
+  &lt;div class=&quot;assess-block&quot;&gt;
+    &lt;div class=&quot;assess-conf&quot;&gt;⬤ High-Confidence Assessment&lt;/div&gt;
+    &lt;div class=&quot;assess-title&quot;&gt;configuration validation bug in Product Console vX.Y.Z — hotfix vX.Y hotfix not applied&lt;/div&gt;
+    &lt;div class=&quot;assess-body&quot;&gt;
+      The evidence strongly indicates the settings save failure is caused by a strict validation regression in vX.Y.Z
+      that rejects configuration Allowed User Account entries containing an empty &lt;code&gt;client_ip&lt;/code&gt; field.
+      HTTP 400 response body is unambiguous: &lt;code&gt;allowed_users[5].client_ip: value is empty, which is not a valid IP address [string.ip_empty]&lt;/code&gt;.
+      The Jira ticket was closed with fix version vX.Y hotfix, but the system is running vX.Y.Z with &lt;strong&gt;no upgrade logs present&lt;/strong&gt; —
+      the hotfix has not reached this appliance. Every settings save attempt with empty &lt;code&gt;client_ip&lt;/code&gt; configuration entries will fail until vX.Y hotfix is installed.
+      &lt;br&gt;&lt;br&gt;
+      Three independent secondary fault clusters co-exist: &lt;strong&gt;database connection saturation&lt;/strong&gt; (high connection count, 0% CPU idle, runaway
+      &lt;code&gt;schedule_job&lt;/code&gt; scheduler at high call volume), &lt;strong&gt;cloud connectivity isolation&lt;/strong&gt; (corporate TLS inspection blocking *.vendor.example.com, 38,740
+      background job failures, 100% device fleet stale), and &lt;strong&gt;message bus memory pressure&lt;/strong&gt; (94.57% of 2GiB limit, OOM imminent).
+      None caused the HTTP 400 directly, but all represent live operational risk.
+    &lt;/div&gt;
+    &lt;div class=&quot;assess-ev&quot;&gt;
+      &lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · api4xxErrors PUT /settings/save 400=3&lt;/span&gt;
+      &lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · version=vX.Y.Z&lt;/span&gt;
+      &lt;span class=&quot;ev-tag&quot;&gt;workflow-timeline.json · status=data_unavailable, upgradeCount=0&lt;/span&gt;
+      &lt;span class=&quot;ev-tag&quot;&gt;ticket-context.json · productVersion=vX.Y hotfix (fix version)&lt;/span&gt;
+      &lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · dbActivity.totalConnections=381&lt;/span&gt;
+      &lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · cpu.idlePct=0.0&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- FINDINGS TABLE --&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-title&quot;&gt;Findings&lt;/div&gt;
+  &lt;table&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Severity&lt;/th&gt;&lt;th&gt;Finding&lt;/th&gt;&lt;th&gt;Count&lt;/th&gt;&lt;th&gt;Evidence&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;code&gt;ERR-001&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-medium&quot;&gt;Medium&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;settings save HTTP 400 — hotfix undeployed&lt;/strong&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px;color:var(--muted)&quot;&gt;Apply hotfix vX.Y hotfix immediately&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;3 × HTTP 400&lt;/td&gt;
+        &lt;td style=&quot;max-width:200px&quot;&gt;&lt;span class=&quot;ev-tag&quot; style=&quot;display:block;word-break:break-word&quot;&gt;api-error-summary.json · api4xxErrors PUT /settings/save&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;code&gt;ERR-002&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-high&quot;&gt;High&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;background job 503 — cloud command channel blocked 9 days&lt;/strong&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px;color:var(--muted)&quot;&gt;Corporate TLS inspection blocking *.vendor.example.com. Whitelist or add CA cert.&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;38,740 events&lt;/td&gt;
+        &lt;td style=&quot;max-width:200px&quot;&gt;&lt;span class=&quot;ev-tag&quot; style=&quot;display:block;word-break:break-word&quot;&gt;application-error-normalized.json · errorGroups[0] + warnGroups[0]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;code&gt;ERR-003&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-high&quot;&gt;High&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;time-series database cagg background worker failures&lt;/strong&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px;color:var(--muted)&quot;&gt;one background job cannot start — analytics dashboard stale. Fix: restart analytics-db.&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;137 failures&lt;/td&gt;
+        &lt;td style=&quot;max-width:200px&quot;&gt;&lt;span class=&quot;ev-tag&quot; style=&quot;display:block;word-break:break-word&quot;&gt;system-log-summary.json · topErrorMessages[0]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;code&gt;ERR-004&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-high&quot;&gt;High&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;database connection saturation + CPU exhaustion&lt;/strong&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px;color:var(--muted)&quot;&gt;schedule_job runaway (high call volume). Restart analytics-db; investigate scheduler config.&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;high connection count&lt;/td&gt;
+        &lt;td style=&quot;max-width:200px&quot;&gt;&lt;span class=&quot;ev-tag&quot; style=&quot;display:block;word-break:break-word&quot;&gt;system-health-summary.json · dbActivity + db-query-analysis.json · qtid 127&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;code&gt;ERR-005&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-medium&quot;&gt;Medium&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;message bus memory pressure near OOM threshold&lt;/strong&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px;color:var(--muted)&quot;&gt;Increase message bus memory limit to 3-4 GiB within 72h.&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;94.57% memory&lt;/td&gt;
+        &lt;td style=&quot;max-width:200px&quot;&gt;&lt;span class=&quot;ev-tag&quot; style=&quot;display:block;word-break:break-word&quot;&gt;system-health-summary.json · containerResources.message_bus&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;code&gt;ERR-006&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-low&quot;&gt;Low&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;inventory-api cache misses cascading to TLS failure&lt;/strong&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px;color:var(--muted)&quot;&gt;Secondary cascade of ERR-002. Resolves when cloud connectivity is restored.&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;140 errors&lt;/td&gt;
+        &lt;td style=&quot;max-width:200px&quot;&gt;&lt;span class=&quot;ev-tag&quot; style=&quot;display:block;word-break:break-word&quot;&gt;application-error-normalized.json · errorGroups[2]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;code&gt;ERR-007&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-medium&quot;&gt;Medium&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;100% device fleet stale — all devices &gt;30 days without update&lt;/strong&gt;&lt;br&gt;&lt;span style=&quot;font-size:12px;color:var(--muted)&quot;&gt;some devices never updated. Resolves after fixing cloud connectivity (ERR-002).&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;253/253 stale&lt;/td&gt;
+        &lt;td style=&quot;max-width:200px&quot;&gt;&lt;span class=&quot;ev-tag&quot; style=&quot;display:block;word-break:break-word&quot;&gt;system-health-summary.json · deviceInfo.staleDevices=253&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;!-- ERROR DIST + DONUT --&gt;
+&lt;div class=&quot;two-col&quot; style=&quot;margin-bottom:20px&quot;&gt;
+  &lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;card-title&quot;&gt;Error Distribution&lt;/div&gt;
+    &lt;svg role=&quot;img&quot; aria-label=&quot;Error distribution&quot; width=&quot;100%&quot; viewBox=&quot;0 0 480 354&quot; style=&quot;max-width:480px;overflow:hidden&quot;&gt;
+&lt;text x=&quot;4&quot; y=&quot;16&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot;&gt;sqrt scale (max/min ratio: 2585×)&lt;/text&gt;
+&lt;rect x=&quot;130&quot; y=&quot;24&quot; width=&quot;320.0&quot; height=&quot;32&quot; fill=&quot;#db3d44&quot; rx=&quot;3&quot;/&gt;
+&lt;text x=&quot;126&quot; y=&quot;44&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;sync-worker&lt;/text&gt;
+&lt;text x=&quot;455.0&quot; y=&quot;44&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;23,265&lt;/text&gt;
+&lt;rect x=&quot;130&quot; y=&quot;64&quot; width=&quot;84.6&quot; height=&quot;32&quot; fill=&quot;#e06c30&quot; rx=&quot;3&quot;/&gt;
+&lt;text x=&quot;126&quot; y=&quot;84&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;auth-api&lt;/text&gt;
+&lt;text x=&quot;219.6&quot; y=&quot;84&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;1,625&lt;/text&gt;
+&lt;rect x=&quot;130&quot; y=&quot;104&quot; width=&quot;24.8&quot; height=&quot;32&quot; fill=&quot;#ecb62b&quot; rx=&quot;3&quot;/&gt;
+&lt;text x=&quot;126&quot; y=&quot;124&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;cache-api&lt;/text&gt;
+&lt;text x=&quot;159.8&quot; y=&quot;124&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;140&lt;/text&gt;
+&lt;rect x=&quot;130&quot; y=&quot;144&quot; width=&quot;12.8&quot; height=&quot;32&quot; fill=&quot;rgba(236,182,43,0.65)&quot; rx=&quot;3&quot;/&gt;
+&lt;text x=&quot;126&quot; y=&quot;164&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;billing-job&lt;/text&gt;
+&lt;text x=&quot;147.8&quot; y=&quot;164&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;37&lt;/text&gt;
+&lt;rect x=&quot;130&quot; y=&quot;184&quot; width=&quot;11.7&quot; height=&quot;32&quot; fill=&quot;#a370f7&quot; rx=&quot;3&quot;/&gt;
+&lt;text x=&quot;126&quot; y=&quot;204&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;report-api&lt;/text&gt;
+&lt;text x=&quot;146.7&quot; y=&quot;204&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;31&lt;/text&gt;
+&lt;rect x=&quot;130&quot; y=&quot;224&quot; width=&quot;10.9&quot; height=&quot;32&quot; fill=&quot;rgba(163,112,247,0.60)&quot; rx=&quot;3&quot;/&gt;
+&lt;text x=&quot;126&quot; y=&quot;244&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;notification&lt;/text&gt;
+&lt;text x=&quot;145.9&quot; y=&quot;244&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;27&lt;/text&gt;
+&lt;rect x=&quot;130&quot; y=&quot;264&quot; width=&quot;7.6&quot; height=&quot;32&quot; fill=&quot;rgba(100,181,246,0.80)&quot; rx=&quot;3&quot;/&gt;
+&lt;text x=&quot;126&quot; y=&quot;284&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;scheduler&lt;/text&gt;
+&lt;text x=&quot;142.6&quot; y=&quot;284&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;13&lt;/text&gt;
+&lt;rect x=&quot;130&quot; y=&quot;304&quot; width=&quot;6.3&quot; height=&quot;32&quot; fill=&quot;rgba(100,181,246,0.50)&quot; rx=&quot;3&quot;/&gt;
+&lt;text x=&quot;126&quot; y=&quot;324&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;audit-api&lt;/text&gt;
+&lt;text x=&quot;141.3&quot; y=&quot;324&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;9&lt;/text&gt;
+&lt;/svg&gt;
+    &lt;div style=&quot;margin-top:8px;font-size:11px;color:var(--muted)&quot;&gt;
+      &lt;span class=&quot;ev-tag&quot;&gt;application-error-normalized.json · errorGroups[0..7]&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;card-title&quot;&gt;Severity Breakdown&lt;/div&gt;
+    &lt;div style=&quot;display:flex;align-items:center;gap:16px;flex-wrap:wrap&quot;&gt;
+      &lt;svg role=&quot;img&quot; aria-label=&quot;Severity donut&quot; width=&quot;160&quot; height=&quot;160&quot; viewBox=&quot;0 0 160 160&quot;&gt;&lt;circle cx=&quot;80&quot; cy=&quot;80&quot; r=&quot;55&quot; fill=&quot;none&quot; stroke=&quot;#2a2a45&quot; stroke-width=&quot;18&quot;/&gt;&lt;circle cx=&quot;80&quot; cy=&quot;80&quot; r=&quot;55&quot; fill=&quot;none&quot; stroke=&quot;#db3d44&quot; stroke-width=&quot;18&quot; stroke-dasharray=&quot;148.1 345.6&quot; stroke-dashoffset=&quot;0.0&quot; transform=&quot;rotate(-90 80 80)&quot;/&gt;&lt;circle cx=&quot;80&quot; cy=&quot;80&quot; r=&quot;55&quot; fill=&quot;none&quot; stroke=&quot;#e06c30&quot; stroke-width=&quot;18&quot; stroke-dasharray=&quot;148.1 345.6&quot; stroke-dashoffset=&quot;-148.1&quot; transform=&quot;rotate(-90 80 80)&quot;/&gt;&lt;circle cx=&quot;80&quot; cy=&quot;80&quot; r=&quot;55&quot; fill=&quot;none&quot; stroke=&quot;#c49b00&quot; stroke-width=&quot;18&quot; stroke-dasharray=&quot;49.4 345.6&quot; stroke-dashoffset=&quot;-296.2&quot; transform=&quot;rotate(-90 80 80)&quot;/&gt;&lt;text x=&quot;80&quot; y=&quot;74&quot; text-anchor=&quot;middle&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;18&quot; font-weight=&quot;bold&quot;&gt;7&lt;/text&gt;&lt;text x=&quot;80&quot; y=&quot;90&quot; text-anchor=&quot;middle&quot; fill=&quot;#8888aa&quot; font-size=&quot;9&quot;&gt;findings&lt;/text&gt;&lt;/svg&gt;
+      &lt;div class=&quot;donut-legend&quot;&gt;
+        &lt;div class=&quot;dl-item&quot;&gt;&lt;div class=&quot;dl-dot&quot; style=&quot;background:#db3d44&quot;&gt;&lt;/div&gt;&lt;span style=&quot;color:var(--text)&quot;&gt;Critical/High (3)&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;dl-item&quot;&gt;&lt;div class=&quot;dl-dot&quot; style=&quot;background:#e06c30&quot;&gt;&lt;/div&gt;&lt;span style=&quot;color:var(--text)&quot;&gt;Medium (3)&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;dl-item&quot;&gt;&lt;div class=&quot;dl-dot&quot; style=&quot;background:#c49b00&quot;&gt;&lt;/div&gt;&lt;span style=&quot;color:var(--text)&quot;&gt;Low (1)&lt;/span&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- API ERROR TABLE --&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-title&quot;&gt;API 4xx / 5xx Errors&lt;/div&gt;
+  &lt;table&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Method&lt;/th&gt;&lt;th&gt;Path&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th&gt;Count&lt;/th&gt;&lt;th&gt;Note&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;span class=&quot;method method-post&quot;&gt;POST&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;code&gt;/api/example-endpoint&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;status-badge s500&quot;&gt;500&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;140&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · api4xxErrors[0]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;span class=&quot;method method-delete&quot;&gt;DELETE&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;code&gt;/api/example-endpoint&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;status-badge s500&quot;&gt;500&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;6&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · api4xxErrors[1]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;span class=&quot;method method-delete&quot;&gt;DELETE&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;code&gt;/api/example-endpoint&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;status-badge s401&quot;&gt;401&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;5&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · api4xxErrors[2]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class=&quot;signal-row&quot;&gt;
+        &lt;td&gt;&lt;span class=&quot;method method-put&quot;&gt;PUT&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;code&gt;/api/example-endpoint&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;status-badge s400&quot;&gt;400&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;3&lt;/td&gt;
+        &lt;td style=&quot;color:var(--ok);font-weight:600;font-size:12px&quot;&gt;← assessment signal &lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · api4xxErrors[3]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;span class=&quot;method method-get&quot;&gt;GET&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;code&gt;/api/example-endpoint&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;status-badge s401&quot;&gt;401&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · api4xxErrors[4]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;span class=&quot;method method-get&quot;&gt;GET&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;code&gt;/api/example-endpoint&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;status-badge s401&quot;&gt;401&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · api4xxErrors[5]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;span class=&quot;method method-get&quot;&gt;GET&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;code&gt;/api/example-endpoint&lt;/code&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;status-badge s401&quot;&gt;401&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;1&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · api4xxErrors[6]&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;!-- SLOW QUERIES + TABLE GROWTH --&gt;
+&lt;div class=&quot;two-col&quot; style=&quot;margin-bottom:20px&quot;&gt;
+  &lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;card-title&quot;&gt;Slow Queries&lt;/div&gt;
+    &lt;div style=&quot;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px&quot;&gt;
+      &lt;div style=&quot;text-align:center&quot;&gt;
+        &lt;div style=&quot;font-size:22px;font-weight:800;color:var(--low)&quot;&gt;518&lt;/div&gt;
+        &lt;div style=&quot;font-size:11px;color:var(--muted)&quot;&gt;Slow (&gt;1s)&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&quot;text-align:center&quot;&gt;
+        &lt;div style=&quot;font-size:22px;font-weight:800;color:var(--medium)&quot;&gt;104&lt;/div&gt;
+        &lt;div style=&quot;font-size:11px;color:var(--muted)&quot;&gt;Damn-slow (&gt;3s)&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&quot;text-align:center&quot;&gt;
+        &lt;div style=&quot;font-size:22px;font-weight:800;color:var(--high)&quot;&gt;0&lt;/div&gt;
+        &lt;div style=&quot;font-size:11px;color:var(--muted)&quot;&gt;Critical (&gt;10s)&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div style=&quot;font-size:12px;color:var(--muted);margin-bottom:6px&quot;&gt;Top component: &lt;strong style=&quot;color:var(--text)&quot;&gt;user-profile-service&lt;/strong&gt; — user SELECT queries 1,821ms–3,650ms&lt;/div&gt;
+    &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;application-slow-queries.json · totalSlowEntries=622, topEntries[0..4]&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;card-title&quot;&gt;Table Growth Leaders&lt;/div&gt;
+    &lt;svg role=&quot;img&quot; aria-label=&quot;Table growth&quot; width=&quot;100%&quot; viewBox=&quot;0 0 360 146&quot; style=&quot;max-width:360px;overflow:hidden&quot;&gt;
+&lt;rect x=&quot;150&quot; y=&quot;4&quot; width=&quot;180.0&quot; height=&quot;28&quot; fill=&quot;#7349fd&quot; rx=&quot;3&quot; opacity=&quot;0.7&quot;/&gt;
+&lt;text x=&quot;146&quot; y=&quot;22&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;metric_rollups&lt;/text&gt;
+&lt;text x=&quot;335.0&quot; y=&quot;22&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;+856KB&lt;/text&gt;
+&lt;rect x=&quot;150&quot; y=&quot;38&quot; width=&quot;107.7&quot; height=&quot;28&quot; fill=&quot;#7349fd&quot; rx=&quot;3&quot; opacity=&quot;0.7&quot;/&gt;
+&lt;text x=&quot;146&quot; y=&quot;56&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;user_status&lt;/text&gt;
+&lt;text x=&quot;262.7&quot; y=&quot;56&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;+512KB&lt;/text&gt;
+&lt;rect x=&quot;150&quot; y=&quot;72&quot; width=&quot;18.5&quot; height=&quot;28&quot; fill=&quot;#7349fd&quot; rx=&quot;3&quot; opacity=&quot;0.7&quot;/&gt;
+&lt;text x=&quot;146&quot; y=&quot;90&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;user_metadata&lt;/text&gt;
+&lt;text x=&quot;173.5&quot; y=&quot;90&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;+88KB&lt;/text&gt;
+&lt;rect x=&quot;150&quot; y=&quot;106&quot; width=&quot;3.4&quot; height=&quot;28&quot; fill=&quot;#7349fd&quot; rx=&quot;3&quot; opacity=&quot;0.7&quot;/&gt;
+&lt;text x=&quot;146&quot; y=&quot;124&quot; fill=&quot;#8888aa&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot; text-anchor=&quot;end&quot;&gt;users&lt;/text&gt;
+&lt;text x=&quot;158.4&quot; y=&quot;124&quot; fill=&quot;#e8e8f0&quot; font-size=&quot;11&quot; font-family=&quot;monospace&quot;&gt;+16KB&lt;/text&gt;
+&lt;/svg&gt;
+    &lt;div style=&quot;margin-top:8px&quot;&gt;&lt;span class=&quot;ev-tag&quot;&gt;table-growth-analysis.json · growthLeaders&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- DB QUERY HOTSPOTS --&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-title&quot;&gt;Database Query Hotspots&lt;/div&gt;
+  &lt;div class=&quot;db-sub&quot;&gt;
+    &lt;h4 style=&quot;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px&quot;&gt;Top by Total Execution Time&lt;/h4&gt;
+    &lt;table&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;qtid&lt;/th&gt;&lt;th&gt;Calls&lt;/th&gt;&lt;th&gt;Total exec (ms)&lt;/th&gt;&lt;th&gt;Query snippet&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;127&lt;/code&gt;&lt;/td&gt;&lt;td&gt;185,278&lt;/td&gt;&lt;td style=&quot;color:var(--high)&quot;&gt;3,317,222&lt;/td&gt;&lt;td&gt;&lt;code&gt;SELECT schedule_job($1, next_run =&gt; to_timestamp($2))&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;185&lt;/code&gt;&lt;/td&gt;&lt;td&gt;686&lt;/td&gt;&lt;td&gt;23,153&lt;/td&gt;&lt;td&gt;&lt;code&gt;insert into APP_LOG (APP_VERSION, SERVICE_NAME, ...)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;136&lt;/code&gt;&lt;/td&gt;&lt;td&gt;51,759&lt;/td&gt;&lt;td&gt;23,002&lt;/td&gt;&lt;td&gt;&lt;code&gt;SELECT count(*) FROM &quot;public&quot;.&quot;user_sessions&quot; WHERE updated_at &gt; $1...&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;189&lt;/code&gt;&lt;/td&gt;&lt;td&gt;20,577&lt;/td&gt;&lt;td&gt;16,441&lt;/td&gt;&lt;td&gt;&lt;code&gt;select (CASE WHEN next_start = $1 THEN $3 ELSE EXTRACT(...))&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;90&lt;/code&gt;&lt;/td&gt;&lt;td&gt;51,759&lt;/td&gt;&lt;td&gt;15,355&lt;/td&gt;&lt;td&gt;&lt;code&gt;SELECT * FROM &quot;public&quot;.&quot;user_sessions&quot; WHERE updated_at &gt; $1...&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;div style=&quot;margin-top:6px&quot;&gt;&lt;span class=&quot;ev-tag&quot;&gt;db-query-analysis.json · topByExecTime&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;db-sub&quot;&gt;
+    &lt;h4 style=&quot;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px&quot;&gt;Top by Call Count&lt;/h4&gt;
+    &lt;table&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;qtid&lt;/th&gt;&lt;th&gt;Calls&lt;/th&gt;&lt;th&gt;Total exec (ms)&lt;/th&gt;&lt;th&gt;Query snippet&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;154&lt;/code&gt;&lt;/td&gt;&lt;td&gt;312,493&lt;/td&gt;&lt;td&gt;4,104&lt;/td&gt;&lt;td&gt;&lt;code&gt;SET LOCAL search_path TO app_schema, pg_temp&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;127&lt;/code&gt;&lt;/td&gt;&lt;td&gt;185,278&lt;/td&gt;&lt;td style=&quot;color:var(--high)&quot;&gt;3,317,222&lt;/td&gt;&lt;td&gt;&lt;code&gt;SELECT schedule_job($1, next_run =&gt; to_timestamp($2))&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;177&lt;/code&gt;&lt;/td&gt;&lt;td&gt;136,433&lt;/td&gt;&lt;td&gt;157&lt;/td&gt;&lt;td&gt;&lt;code&gt;commit&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;175&lt;/code&gt;&lt;/td&gt;&lt;td&gt;136,032&lt;/td&gt;&lt;td&gt;205&lt;/td&gt;&lt;td&gt;&lt;code&gt;begin&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;94&lt;/code&gt;&lt;/td&gt;&lt;td&gt;52,057&lt;/td&gt;&lt;td&gt;593&lt;/td&gt;&lt;td&gt;&lt;code&gt;SELECT * FROM &quot;user_preferences&quot; WHERE user_id = $1&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;div style=&quot;margin-top:6px&quot;&gt;&lt;span class=&quot;ev-tag&quot;&gt;db-query-analysis.json · topByCalls&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h4 style=&quot;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px&quot;&gt;Slowest Avg per Call&lt;/h4&gt;
+    &lt;table&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;qtid&lt;/th&gt;&lt;th&gt;Avg ms/call&lt;/th&gt;&lt;th&gt;Calls&lt;/th&gt;&lt;th&gt;Total exec (ms)&lt;/th&gt;&lt;th&gt;Query snippet&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;207&lt;/code&gt;&lt;/td&gt;&lt;td style=&quot;color:var(--high)&quot;&gt;750.72&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;3,753&lt;/td&gt;&lt;td&gt;&lt;code&gt;INSERT INTO &quot;activity_events&quot; (...) VALUES ...&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;642&lt;/code&gt;&lt;/td&gt;&lt;td&gt;116.58&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;582&lt;/td&gt;&lt;td&gt;&lt;code&gt;INSERT INTO &quot;activity_events&quot; (...) VALUES ...&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;426&lt;/code&gt;&lt;/td&gt;&lt;td&gt;91.75&lt;/td&gt;&lt;td&gt;148&lt;/td&gt;&lt;td&gt;13,579&lt;/td&gt;&lt;td&gt;&lt;code&gt;SELECT retention_cleanup_by_window(...)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;450&lt;/code&gt;&lt;/td&gt;&lt;td&gt;48.21&lt;/td&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;723&lt;/td&gt;&lt;td&gt;&lt;code&gt;SELECT * FROM &quot;risk_events&quot; WHERE created_at &gt;= $1...&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;&lt;code&gt;226&lt;/code&gt;&lt;/td&gt;&lt;td&gt;37.05&lt;/td&gt;&lt;td&gt;124&lt;/td&gt;&lt;td&gt;4,594&lt;/td&gt;&lt;td&gt;&lt;code&gt;INSERT INTO &quot;activity_events&quot; (...) VALUES ...&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+    &lt;div style=&quot;margin-top:6px&quot;&gt;&lt;span class=&quot;ev-tag&quot;&gt;db-query-analysis.json · slowAvgPerCall&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- SYSTEM HEALTH GRID --&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-title&quot;&gt;System Health&lt;/div&gt;
+  &lt;div class=&quot;health-grid&quot;&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;CPU Idle&lt;/div&gt;
+      &lt;div class=&quot;health-val health-crit&quot;&gt;0.0%&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;Postgres saturating all cores&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · systemLoad.cpu.idlePct&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;PG Connections&lt;/div&gt;
+      &lt;div class=&quot;health-val health-crit&quot;&gt;381&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;Rejection threshold: 350&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · dbActivity.totalConnections&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;Version&lt;/div&gt;
+      &lt;div class=&quot;health-val health-crit&quot;&gt;vX.Y.Z&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;Hotfix target: vX.Y hotfix&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · version&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;message bus Memory&lt;/div&gt;
+      &lt;div class=&quot;health-val health-warn&quot;&gt;94.57%&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;1.891 GiB / 2 GiB limit&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · containerResources.message_bus&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;Agent Staleness&lt;/div&gt;
+      &lt;div class=&quot;health-val health-warn&quot;&gt;253/253&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;42 never updated&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · deviceInfo.staleDevices&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;Zombie Processes&lt;/div&gt;
+      &lt;div class=&quot;health-val health-warn&quot;&gt;5&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;Monitor; low risk currently&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · systemLoad.tasks.zombie&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;Disk (/)&lt;/div&gt;
+      &lt;div class=&quot;health-val health-ok&quot;&gt;25%&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;19G used / 57G avail&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · disk.partitions[0]&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;Memory Available&lt;/div&gt;
+      &lt;div class=&quot;health-val health-ok&quot;&gt;10 GiB&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;of 15 GiB total&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · memory.available&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;cache service&lt;/div&gt;
+      &lt;div class=&quot;health-val health-ok&quot;&gt;Healthy&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;1.90 MB / 44 clients&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · redis.healthy&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;OOM Events&lt;/div&gt;
+      &lt;div class=&quot;health-val health-ok&quot;&gt;0&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;No OOM kills&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · oomEvents.count&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;Containers&lt;/div&gt;
+      &lt;div class=&quot;health-val health-ok&quot;&gt;25 ✓&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;0 unhealthy / 0 stopped&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · containerHealth&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;health-item&quot;&gt;
+      &lt;div class=&quot;health-label&quot;&gt;PG Locks&lt;/div&gt;
+      &lt;div class=&quot;health-val health-ok&quot;&gt;0&lt;/div&gt;
+      &lt;div class=&quot;health-sub&quot;&gt;No concurrent locks&lt;/div&gt;
+      &lt;div&gt;&lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · pgLocks.healthy&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- INCIDENT TIMELINE --&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-title&quot;&gt;Incident Timeline&lt;/div&gt;
+  &lt;div class=&quot;timeline&quot;&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-info&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-03-26&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;DuckDB metrics collection begins — earliest pg-stat-statement snapshot &lt;span class=&quot;ev-tag&quot;&gt;table-growth-analysis.json · timeRange.earliest&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-warn&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-03-27 04:45&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;metric_query_templates rapid growth +630KB in 5 min — &lt;em&gt;runaway schedule_job beginning to accumulate novel query templates&lt;/em&gt; &lt;span class=&quot;ev-tag&quot;&gt;table-growth-analysis.json · rapidGrowthEvents[0]&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-high&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-04-01 00:00&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;Fluent log window opens · background job 503 errors present from first entry — &lt;strong&gt;cloud channel already blocked at log start&lt;/strong&gt; &lt;span class=&quot;ev-tag&quot;&gt;application-error-normalized.json · timeRange.first&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-high&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-04-01 → 2026-04-09&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;&lt;strong&gt;9-day cloud isolation storm&lt;/strong&gt; — 23,265 background job ERRORs + 15,475 WARNINGs = 38,740 events. Consistent HTTP 503 from 192.0.2.10 + x509 TLS failures for *.vendor.example.com &lt;span class=&quot;ev-tag&quot;&gt;application-error-normalized.json · errorGroups[0], warnGroups[0]&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-critical&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-04-03 14:12&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;&lt;strong&gt;time-series database background worker failures begin&lt;/strong&gt; — 137× &quot;failed to start background worker&quot; for one background job. aggregate_job_example refresh failing — policy analytics degraded &lt;span class=&quot;ev-tag&quot;&gt;system-log-summary.json · topErrorMessages[0]&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-info&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-04-09 06:32&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;Last successful agent pattern update recorded &lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · agentInfo.latestPatternUpdate&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-info&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-04-09 07:12&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;Fluent log window closes — last observable log entry &lt;span class=&quot;ev-tag&quot;&gt;application-error-normalized.json · timeRange.last&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-gap&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot; style=&quot;color:var(--muted);font-style:italic&quot;&gt;DATA GAP ~26 hours&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot; style=&quot;color:var(--muted);font-style:italic&quot;&gt;No log evidence available. Secondary faults (PG saturation, cloud isolation) presumed to persist.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-critical&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-04-10 09:08&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;&lt;strong&gt;⛔ Incident: Customer reports settings save failure&lt;/strong&gt; — &quot;An unexpected error occurred.&quot; Error captured: PUT /settings/save → HTTP 400 · client_ip empty validation rejection &lt;span class=&quot;ev-tag&quot;&gt;ticket-context.json · problemStatement&lt;/span&gt; &lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · api4xxErrors[3]&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-info&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-04-10 11:38&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;Jira ticket CASE-1024 created (P3, High End) &lt;span class=&quot;ev-tag&quot;&gt;ticket-context.json · createdAt&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;tl-item&quot;&gt;
+      &lt;div class=&quot;tl-dot tl-dot-ok&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;tl-time&quot;&gt;2026-05-05 12:32&lt;/div&gt;
+      &lt;div class=&quot;tl-desc&quot;&gt;Jira CASE-1024 closed/resolved — hotfix vX.Y hotfix prepared. &lt;strong style=&quot;color:var(--high)&quot;&gt;⚠ NOT applied to this appliance&lt;/strong&gt; (system still on vX.Y.Z, no dedicated workflow evidence logs) &lt;span class=&quot;ev-tag&quot;&gt;ticket-context.json · resolutionDate&lt;/span&gt; &lt;span class=&quot;ev-tag&quot;&gt;workflow-timeline.json · status=data_unavailable&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- REMEDIATION ACTIONS --&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-title&quot;&gt;Prioritized Remediation Actions&lt;/div&gt;
+  &lt;table&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;#&lt;/th&gt;&lt;th&gt;Priority&lt;/th&gt;&lt;th&gt;Action&lt;/th&gt;&lt;th&gt;Cluster&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-high&quot;&gt;IMMEDIATE&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;Apply hotfix vX.Y hotfix&lt;/strong&gt; — configuration validation bug still present on this appliance. Every policy save with empty client_ip configuration entries will fail until upgraded. &lt;span class=&quot;ev-tag&quot;&gt;workflow-timeline.json · upgradeCount=0&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;CLUSTER-A&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-high&quot;&gt;URGENT 24h&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;Restart analytics-db&lt;/strong&gt; to clear schedule_job runaway (high call volume, 55 min CPU). Post-restart: query &lt;code&gt;analytics-db_information.jobs WHERE next_start &lt; now() - interval '1 hour'&lt;/code&gt; to identify stuck scheduler. &lt;span class=&quot;ev-tag&quot;&gt;db-query-analysis.json · qtid 127&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;CLUSTER-B&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;strong&gt;3&lt;/strong&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-medium&quot;&gt;URGENT 48h&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;Resolve Example Customer TLS inspection bypass&lt;/strong&gt; for *.vendor.example.com and *.service.example.com. Add Vendor CA to proxy trust store, or create network exception for the required outbound service endpoint. &lt;span class=&quot;ev-tag&quot;&gt;api-error-summary.json · x509 errors&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;CLUSTER-C&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;strong&gt;4&lt;/strong&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge sev-low&quot;&gt;MONITOR 72h&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;Increase message bus memory limit&lt;/strong&gt; 2 GiB → 3–4 GiB. Review topic retention settings. Monitor memPct below 80% post-change. &lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · message_bus avgMemPct=94.57&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;CLUSTER-D&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;&lt;strong&gt;5&lt;/strong&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;sev-badge&quot; style=&quot;background:#e8f4ff;color:#0055aa&quot;&gt;ADVISORY&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;strong&gt;Investigate 42 never-updated agents&lt;/strong&gt; after restoring cloud connectivity. Check registration status; re-register persistent non-updaters. &lt;span class=&quot;ev-tag&quot;&gt;system-health-summary.json · agentInfo.neverUpdatedAgents=42&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;CLUSTER-C&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;!-- DATA GAPS --&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;div class=&quot;card-title&quot;&gt;Data Gaps&lt;/div&gt;
+  &lt;div class=&quot;gap-item&quot;&gt;&lt;span class=&quot;gap-label&quot;&gt;Incident-day logs unavailable&lt;/span&gt; — Fluent logs end 2026-04-09 07:12; incident at 2026-04-10 09:08 (~26h gap). Assessment inferred from pre-incident pattern + Jira description.&lt;/div&gt;
+  &lt;div class=&quot;gap-item&quot;&gt;&lt;span class=&quot;gap-label&quot;&gt;dedicated workflow evidence stream unavailable&lt;/span&gt; — Cannot confirm whether vX.Y hotfix was applied after bundle date. System version file confirms vX.Y.Z.&lt;/div&gt;
+  &lt;div class=&quot;gap-item&quot;&gt;&lt;span class=&quot;gap-label&quot;&gt;app-info file missing&lt;/span&gt; — Minor; version confirmed via &lt;code&gt;version&lt;/code&gt; file.&lt;/div&gt;
+  &lt;div class=&quot;gap-item&quot;&gt;&lt;span class=&quot;gap-label&quot;&gt;HAR file not in bundle&lt;/span&gt; — Jira notes HAR was collected. Would add browser-side request detail; HTTP 400 body in application logs provides sufficient evidence.&lt;/div&gt;
+  &lt;div class=&quot;gap-item&quot;&gt;&lt;span class=&quot;gap-label&quot;&gt;schedule_job trigger unidentified&lt;/span&gt; — db-query-analysis shows high call volume but does not identify which specific job is misconfigured. Requires live DB investigation.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;footer&quot;&gt;
+  Generated by demo-triage · Run RUN-2026-EXAMPLE · 2026-05-22 09:54 UTC
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;" title="Embedded triage report"></iframe>
+</div>
+<div class="output-list"><span>Markdown report</span><span>Jira summary</span><span>Visual HTML report</span></div>
+<div class="punch small">The output is a <span>support handoff artifact</span>, not just AI text.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div></section>
+<section class="slide chapter">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">13 / 24</div></div>
+<div class="eyebrow">CHAPTER 03</div>
+<h1>Improving The AI System</h1>
+<div class="subtitle">AI systems improve through repeated production feedback loops.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide feedback-loop-v2">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">14 / 24</div></div>
+<div class="eyebrow">FEEDBACK LOOP</div>
+<h1>Train with cases where the answer is already known</h1>
+<div class="flow-wrap">
+<div class="flow-cards">
+<div class="flow-card">
+<div class="flow-title">Known case logs</div>
+<svg aria-hidden="true" class="icon" viewbox="0 0 140 140">
+<rect fill="none" height="90" rx="9" stroke="rgba(255,255,255,.35)" stroke-width="4" width="70" x="24" y="24"></rect>
+<rect fill="none" height="90" rx="9" stroke="rgba(255,255,255,.72)" stroke-width="4" width="70" x="35" y="34"></rect>
+<line stroke="#ff2156" stroke-linecap="round" stroke-width="8" x1="48" x2="85" y1="55" y2="55"></line>
+<line stroke="rgba(255,255,255,.45)" stroke-linecap="round" stroke-width="4" x1="48" x2="91" y1="75" y2="75"></line>
+<line stroke="#ff2156" stroke-linecap="round" stroke-width="4" x1="48" x2="76" y1="92" y2="92"></line>
+<circle cx="96" cy="98" fill="none" r="24" stroke="white" stroke-width="5"></circle>
+<line stroke="white" stroke-linecap="round" stroke-width="5" x1="113" x2="130" y1="116" y2="132"></line>
+</svg>
+<div class="flow-desc">Historical cases with verified outcomes</div>
+</div>
+<div class="flow-card">
+<div class="flow-title">AI analysis</div>
+<svg aria-hidden="true" class="icon" viewbox="0 0 140 140">
+<rect fill="rgba(255,255,255,.04)" height="68" rx="15" stroke="#8a5cff" stroke-width="5" width="68" x="36" y="36"></rect>
+<rect fill="rgba(255,255,255,.06)" height="40" rx="8" stroke="rgba(255,255,255,.55)" stroke-width="3" width="40" x="50" y="50"></rect>
+<text class="chip-ai" text-anchor="middle" x="70" y="78">AI</text>
+<g stroke="#8a5cff" stroke-linecap="round" stroke-width="4"><line x1="70" x2="70" y1="20" y2="36"></line><line x1="48" x2="48" y1="20" y2="36"></line><line x1="92" x2="92" y1="20" y2="36"></line><line x1="70" x2="70" y1="104" y2="122"></line><line x1="48" x2="48" y1="104" y2="122"></line><line x1="92" x2="92" y1="104" y2="122"></line><line x1="20" x2="36" y1="70" y2="70"></line><line x1="104" x2="122" y1="70" y2="70"></line><line x1="104" x2="122" y1="50" y2="40"></line><line x1="18" x2="36" y1="94" y2="86"></line></g>
+<g fill="#ff2156"><circle cx="92" cy="20" r="5"></circle><circle cx="122" cy="40" r="5"></circle></g>
+</svg>
+<div class="flow-desc">Analyze the case and propose an answer</div>
+</div>
+<div class="flow-card">
+<div class="flow-title">Wrong conclusion</div>
+<svg aria-hidden="true" class="icon" viewbox="0 0 140 140">
+<path d="M38 22h48l22 22v72H38z" fill="none" stroke="rgba(255,255,255,.70)" stroke-linejoin="round" stroke-width="4"></path>
+<path d="M86 22v24h22" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="4"></path>
+<line stroke="rgba(255,255,255,.28)" stroke-linecap="round" stroke-width="5" x1="52" x2="82" y1="60" y2="60"></line>
+<line stroke="rgba(255,255,255,.28)" stroke-linecap="round" stroke-width="5" x1="52" x2="89" y1="78" y2="78"></line>
+<circle cx="92" cy="92" fill="#ff2156" r="31"></circle>
+<path d="M78 78l28 28M106 78l-28 28" stroke="white" stroke-linecap="round" stroke-width="8"></path>
+</svg>
+<div class="flow-desc">The answer does not match the known result</div>
+</div>
+<div class="flow-card">
+<div class="flow-title">Engineer feedback</div>
+<svg aria-hidden="true" class="icon" viewbox="0 0 140 140">
+<circle cx="48" cy="53" fill="none" r="24" stroke="white" stroke-width="5"></circle>
+<path d="M18 122c4-28 19-42 30-42s27 14 31 42z" fill="none" stroke="white" stroke-linejoin="round" stroke-width="5"></path>
+<rect fill="#7b4dff" height="35" rx="9" width="46" x="82" y="38"></rect>
+<path d="M92 73l-12 15v-15" fill="#7b4dff"></path>
+<circle cx="99" cy="55" fill="rgba(255,255,255,.55)" r="4"></circle><circle cx="112" cy="55" fill="rgba(255,255,255,.55)" r="4"></circle><circle cx="125" cy="55" fill="rgba(255,255,255,.55)" r="4"></circle>
+</svg>
+<div class="flow-desc">Review the result and provide corrections</div>
+</div>
+<div class="flow-card">
+<div class="flow-title">AI analysis &amp;<br/>Agent / skill refinement<br/><span class="green">until fixed</span></div>
+<svg aria-hidden="true" class="icon" viewbox="0 0 140 140">
+<path d="M22 88a49 49 0 0 1 82-45" fill="none" stroke="#27d7ad" stroke-linecap="round" stroke-width="6"></path>
+<path d="M101 42l0 21l18-10" fill="none" stroke="#27d7ad" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"></path>
+<path d="M118 56a49 49 0 0 1-80 48" fill="none" stroke="#8a5cff" stroke-linecap="round" stroke-width="6"></path>
+<path d="M39 104l0-21l-18 10" fill="none" stroke="#8a5cff" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"></path>
+<rect fill="rgba(255,255,255,.04)" height="43" rx="9" stroke="white" stroke-width="3" width="43" x="50" y="50"></rect>
+<text fill="white" font-size="24" font-weight="900" text-anchor="middle" x="72" y="79">AI</text>
+<circle cx="102" cy="100" fill="none" r="15" stroke="white" stroke-width="4"></circle><path d="M102 77v10M102 113v10M79 100h10M115 100h10" stroke="white" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<div class="flow-desc">Re-analyze and refine skills until the answer is correct</div>
+</div>
+</div>
+<div class="card-arrow a1">→</div><div class="card-arrow a2">→</div><div class="card-arrow a3">→</div><div class="card-arrow a4">→</div>
+<div class="retry-line"></div><div class="retry-label">Not correct yet? Keep improving.</div>
+</div>
+<div class="goal-box"><div class="goal-icon">◎</div><div class="goal-text">The goal was not to memorize answers.<br/>The goal was <span>to discover missing patterns.</span></div></div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">15 / 24</div></div>
+<div class="eyebrow">SYSTEM IMPROVEMENT RULE</div>
+<h1>Avoid hardcoded intelligence</h1>
+<div class="two-col">
+<div class="bad"><small>BAD</small><pre>if error == X:
+    return answer Y</pre></div>
+<div class="good"><small>GOOD</small><pre>improve evidence extraction
+improve pattern recognition
+improve correlation rules</pre></div>
+</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+<div style="
+  margin-top: 70px;
+  font-size: 42px;
+  line-height: 1.28;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  color: rgba(255,255,255,0.92);
+  max-width: 980px;
+">
+  Don’t tell it what to do.<br/><br/>
+
+  Give it <span style="color:#ff2b62;">success criteria</span> —
+  and watch it go.
+</div>
+<div style="
+  margin-top: 26px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+">
+  From manual production triage to autonomous investigative systems
+</div>
+</section>
+<section class="slide chapter">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">16 / 24</div></div>
+<div class="eyebrow">CHAPTER 04</div>
+<h1>Whitelist</h1>
+<div class="subtitle">Reduce token usage and prevent known noise from dominating the report.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide noise-pipeline-slide"><div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">17 / 24</div></div>
+<div class="eyebrow">NOISE REDUCTION</div>
+<h1>AI became useful only after noise was controlled</h1>
+<div class="noise-grid">
+<div class="noise-copy">
+<p class="big-line">Many operations return <b>Top N</b> results. Known noise can occupy the entire report.</p>
+<div class="pillbar-red"><span>Less token usage</span><span>Less time</span><span>Higher signal quality</span></div>
+</div>
+<div class="noise-pipeline">
+<div>Raw Logs</div><span>↓</span><div class="hot">Whitelist Filtering</div><span>↓</span><div>Relevant Evidence</div><span>↓</span><div>AI Analysis</div>
+</div>
+</div>
+<div class="punch small">Domain knowledge moves <span>earlier</span> in the pipeline.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div></section>
+<section class="slide whitelist-oldstyle-slide"><div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">18 / 24</div></div>
+<div class="eyebrow">WHITELIST SKILL</div>
+<h1>Natural language → regex rule → global filtering</h1>
+<div class="whitelist-panels">
+<div class="terminal-card">
+<pre>/whitelist Exclude lines that contain both
+"warn." and "rows: 0"
+
+→ (?=.*warn\.)(?=.*rows:\s*0)</pre>
+</div>
+<div class="applied-card">
+<div class="scope-kicker">Global script coverage</div>
+<h3>Applied to script execution paths</h3>
+<ul>
+<li>zgrep extraction</li>
+<li class="script-hot">Shell-based extractors before JSON output</li>
+<li class="script-hot">Parsing / normalization modules</li>
+<li>journal extraction</li>
+<li>AI summarization input</li>
+</ul>
+<div class="script-chip-row"><span>shell extractors</span><span>parsing modules</span></div>
+</div>
+</div>
+<div class="punch small">Zero tolerance: whitelist rules are enforced before Bash/Python outputs enter the AI stage.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div></section>
+<section class="slide chapter">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">19 / 24</div></div>
+<div class="eyebrow">CHAPTER 05</div>
+<h1>AI-Friendly Production Logs</h1>
+<div class="subtitle">Good AI analysis starts from good observability design.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide semantic-tag-slide"><div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">20 / 24</div></div>
+<div class="eyebrow">LOG AS INDEX</div>
+<h1>Add semantic tags into logs</h1>
+<div class="before-after semantic">
+<div><small>BEFORE</small><pre><span class="warn">WARN</span> (81fb380)
+[4118.742ms][rows: 1]
+SQL: SELECT count(*) FROM ...
+([impl.(*EventRepo).GetCawEndpointsWidget])</pre></div>
+<div><small>AFTER</small><pre><span class="warn">WARN</span> (81fb380)
+[4118.742ms]<mark>[slow]</mark>[rows: 1]
+SQL: SELECT count(*) FROM ...
+([impl.(*EventRepo).GetCawEndpointsWidget])</pre></div>
+</div>
+<div class="chips large semantic-tags"><span class="slow">[slow] ≥ 1s</span><span class="damn">[damn slow] ≥ 5s</span><span class="critical">[critical slow] ≥ 25s</span></div>
+<div class="punch small">It became an <span>index layer</span> for investigation.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div></section>
+<section class="slide upgrade-flow-slide"><div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">21 / 24</div></div>
+<div class="eyebrow">PERSISTENT SIGNALS</div>
+<h1>Extract critical workflows into dedicated evidence streams</h1>
+<div class="upgrade-flow">
+<div class="upgrade-card before">
+<small>BEFORE</small><h3>Workflow signals buried in shared system logs</h3>
+<pre>shared system logs
+├── web gateway
+├── database
+├── cache
+├── container runtime
+├── upgrade workflow
+├── remote access
+└── kernel</pre>
+<p>Mixed noise, rotation risk, high token cost.</p>
+</div>
+<div class="big-flow-arrow">→</div>
+<div class="upgrade-card after">
+<small>AFTER</small><h3>Dedicated workflow evidence stream</h3>
+<pre>workflow evidence stream
+├── source version
+├── target version
+├── migration step
+├── install step
+└── failure signal</pre>
+<p>When the issue is workflow-related, AI jumps directly to high-signal evidence.</p>
+</div>
+</div>
+<div class="punch small">Critical workflows deserved <span>dedicated evidence streams</span>.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div></section>
+<section class="slide telemetry-layer-slide">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">22 / 24</div></div>
+<div class="eyebrow">AI-READY TELEMETRY</div>
+<h1>Model metrics for timeline reasoning</h1>
+<div class="telemetry-layer-grid">
+<div class="telemetry-layer-card current">
+<div class="layer-head">
+<div aria-hidden="true" class="layer-icon">
+<svg viewbox="0 0 48 48"><path d="M10 31h28M10 18h28"></path><path d="M16 12v12M32 24v12"></path><circle cx="16" cy="31" r="4"></circle><circle cx="32" cy="18" r="4"></circle></svg>
+</div>
+<div><small>LAYER 1</small><h3>Current state</h3></div>
+</div>
+<p>disk usage, docker status, agent count, memory.</p>
+<table class="telemetry-table">
+<tr><th>Signal</th><th>Meaning</th></tr>
+<tr><td>Disk Usage</td><td>current storage pressure</td></tr>
+<tr><td>Docker Status</td><td>current container health</td></tr>
+<tr><td>Agent Count</td><td>currently connected endpoints</td></tr>
+<tr><td>Memory</td><td>current runtime resource state</td></tr>
+</table>
+</div>
+<div class="telemetry-layer-card accumulated">
+<div class="layer-head">
+<div aria-hidden="true" class="layer-icon">
+<svg viewbox="0 0 48 48"><path d="M12 34h24"></path><path d="M16 34V14M24 34V21M32 34V10"></path><path d="M12 12l7 7 7-5 10 8"></path></svg>
+</div>
+<div><small>LAYER 2</small><h3>Accumulated signals</h3></div>
+</div>
+<p>query statistics, top tables, historical counters.</p>
+<table class="telemetry-table">
+<tr><th>Signal</th><th>Meaning</th></tr>
+<tr><td>query statistics</td><td>cumulative query behavior</td></tr>
+<tr><td>Top Tables</td><td>historically active datasets</td></tr>
+<tr><td>Historical Counters</td><td>long-term event accumulation</td></tr>
+</table>
+</div>
+<div class="telemetry-layer-card snapshots">
+<div class="layer-head">
+<div aria-hidden="true" class="layer-icon">
+<svg viewbox="0 0 48 48"><path d="M13 12h22v24H13z"></path><path d="M18 8v8M30 8v8M13 20h22"></path><path d="M18 27h4M26 27h4M18 32h4M26 32h4"></path></svg>
+</div>
+<div><small>LAYER 3</small><h3>Time-based snapshots</h3></div>
+</div>
+<p>table size growth, dead tuples, query deltas.</p>
+<table class="telemetry-table">
+<tr><th>Signal</th><th>Meaning</th></tr>
+<tr><td>Table Size Growth</td><td>storage growth over time</td></tr>
+<tr><td>Dead Tuples</td><td>accumulated vacuum pressure</td></tr>
+<tr><td>Query Deltas</td><td>workload changes between snapshots</td></tr>
+</table>
+</div>
+</div>
+<div class="telemetry-bottom-line">Good AI triage depends on telemetry shape, not just telemetry volume.</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+<section class="slide dark key-takeaway-slide">
+<div class="bg-grid"></div>
+<div class="slide-content">
+<div class="brand">tx<span>One</span> networks</div>
+<div class="eyebrow">KEY TAKEAWAYS</div>
+<h1>From manual triage to a repeatable investigation system</h1>
+<div class="takeaway-grid">
+<div class="takeaway-card">
+<div class="num">1</div>
+<h3>AI is useful only when the workflow is bounded</h3>
+<p>The orchestrator owns the order, agents own clear responsibilities, and skills turn repeated investigation steps into executable tools.</p>
+</div>
+<div class="takeaway-card">
+<div class="num">2</div>
+<h3>Evidence first, conclusion later</h3>
+<p>The system collects logs, journal, PostgreSQL signals, system status, upgrade traces, and slow-query evidence before conclusions.</p>
+</div>
+<div class="takeaway-card">
+<div class="num">3</div>
+<h3>Parallel agents reduce investigation time</h3>
+<p>Error, performance, PostgreSQL, upgrade, and system-health analysis run independently before correlation.</p>
+</div>
+<div class="takeaway-card">
+<div class="num">4</div>
+<h3>Known cases become training material</h3>
+<p>Resolved incidents are reused as regression-style cases to validate future triage quality against problems where we already know the answer.</p>
+</div>
+<div class="takeaway-card">
+<div class="num">5</div>
+<h3>Whitelist is part of the learning loop</h3>
+<p>Known harmless errors and environmental noise are filtered out, allowing analyzers to focus on real suspicious signals instead of repeated false positives.</p>
+</div>
+<div class="takeaway-card">
+<div class="num">6</div>
+<h3>It behaves like an execution harness</h3>
+<p>Docker isolation, structured evidence envelopes, contract tests, scoped input rules, and isolated run directories make the system reproducible and debuggable.</p>
+</div>
+</div>
+<div class="takeaway-bottom">
+      The goal is to turn production support from <span>experience-driven debugging</span> into a <span>repeatable, evidence-based triage pipeline</span>.
+    </div>
+</div>
+</section>
+<section class="slide cover final">
+<div class="topbar"><div class="logo"><span>AI</span> Triage</div><div class="idx">24 / 24</div></div>
+<div class="eyebrow">ENDING</div>
+<h1>Design Systems<br>For AI Operators</br></h1>
+<div class="subtitle">For years, we designed systems for human operators. Now we must design systems for AI operators.</div>
+<div class="tag"><span></span>Structured logs · Dedicated signals · Snapshot metrics · Visual reports</div>
+<div class="footer">AI TRIAGE · PUBLIC CONCEPT</div>
+</section>
+</div><div class="navigation nav"><button aria-label="Previous slide" class="prev" data-arrow="‹" onclick="prevSlide()">‹</button><button aria-label="Next slide" class="next" data-arrow="›" onclick="nextSlide()">›</button></div><div class="progress" id="progress"></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let current=0;const progress=document.getElementById('progress');
+function showSlide(i){slides[current].classList.remove('active');current=(i+slides.length)%slides.length;slides[current].classList.add('active');slides[current].scrollTop=0;progress.style.width=((current+1)/slides.length*100)+'%';}
+function nextSlide(){showSlide(current+1)}function prevSlide(){showSlide(current-1)}
+document.addEventListener('keydown',e=>{
+  const active=document.querySelector('.slide.active');
+  const tag=(e.target&&e.target.tagName||'').toLowerCase();
+  if(['input','textarea','select'].includes(tag)) return;
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextSlide();return;}
+  if(e.key==='ArrowLeft'){e.preventDefault();prevSlide();return;}
+  if(e.key==='ArrowDown'){e.preventDefault();active&&active.scrollBy({top:Math.round(window.innerHeight*.75),behavior:'smooth'});return;}
+  if(e.key==='ArrowUp'){e.preventDefault();active&&active.scrollBy({top:-Math.round(window.innerHeight*.75),behavior:'smooth'});return;}
+  if(e.key==='PageDown'){e.preventDefault();active&&active.scrollBy({top:Math.round(window.innerHeight*.9),behavior:'smooth'});return;}
+  if(e.key==='PageUp'){e.preventDefault();active&&active.scrollBy({top:-Math.round(window.innerHeight*.9),behavior:'smooth'});return;}
+});
+progress.style.width=(1/slides.length*100)+'%';
+
+
+let reportZoom=1;let reportInspect=false;let reportInspectBound=false;
+function withReportDoc(fn){const f=document.getElementById('reportFrame');try{if(f&&f.contentDocument){fn(f.contentDocument,f)}}catch(e){}}
+function applyReportZoom(){withReportDoc((doc)=>{doc.documentElement.style.fontSize=(16*reportZoom)+'px';doc.body.style.zoom=reportZoom;doc.body.style.transformOrigin='0 0';});const label=document.getElementById('zoomLabel');if(label)label.textContent=Math.round(reportZoom*100)+'%';}
+function reportZoomIn(){reportZoom=Math.min(2,Math.round((reportZoom+.15)*100)/100);applyReportZoom()}
+function reportZoomOut(){reportZoom=Math.max(.75,Math.round((reportZoom-.15)*100)/100);applyReportZoom()}
+function reportZoomReset(){reportZoom=1;applyReportZoom()}
+function toggleReportInspect(){reportInspect=!reportInspect;const btn=document.getElementById('inspectBtn');const browser=document.querySelector('.report-browser');if(btn)btn.classList.toggle('active',reportInspect);if(browser)browser.classList.toggle('inspecting',reportInspect);bindReportInspector()}
+function bindReportInspector(){if(reportInspectBound)return;withReportDoc((doc)=>{doc.addEventListener('click',function(e){if(!reportInspect)return;const target=e.target.closest('.card,.kpi-card,.health-item,.tl-item,.assess-block,tr');if(!target)return;e.preventDefault();e.stopPropagation();showReportFocus(target.outerHTML);},true);reportInspectBound=true;});}
+function showReportFocus(html){let modal=document.getElementById('reportFocusModal');if(!modal){modal=document.createElement('div');modal.id='reportFocusModal';modal.className='report-focus-modal';modal.innerHTML='<div class="report-focus-panel"><div class="report-focus-head"><span>Magnified report block</span><button type="button" onclick="closeReportFocus()">Close</button></div><div class="report-focus-body" id="reportFocusBody"></div></div>';document.body.appendChild(modal);modal.addEventListener('click',e=>{if(e.target===modal)closeReportFocus()});}document.getElementById('reportFocusBody').innerHTML=html;modal.classList.add('open')}
+function closeReportFocus(){const modal=document.getElementById('reportFocusModal');if(modal)modal.classList.remove('open')}
+const reportFrame=document.getElementById('reportFrame');if(reportFrame){reportFrame.addEventListener('load',()=>{applyReportZoom();reportInspectBound=false;bindReportInspector();});}
+</script></body></html>
